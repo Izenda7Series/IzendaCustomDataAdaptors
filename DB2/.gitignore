@@ -1,0 +1,80 @@
+*.suo
+*.user
+_ReSharper.*
+*lock.json
+packages
+
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+# TODO: Comment the next line if you want to checkin your web deploy settings
+# but database connection strings (with potential passwords) will be unencrypted
+*.pubxml
+*.publishproj
+
+
+# NuGet Packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/packages/repositories.config
+
+# NPM Packages
+node_modules/
+
+# Bower component
+bower_components/
+
+# Visual Studio settings
+.vs/
+
+# Izenda code coverage report
+coverage/
+
+# MacOS marker
+.DS_Store
+/src/Izenda.Synergy.Web/3rd_parties/
+/src/Izenda.Synergy.Web/dist/
+/src/TestResults/
+/src/Izenda.Synergy.Web/3rd_parties/bootstrap-sass-official
+/src/Izenda.Synergy.Web/3rd_parties/font-source-sans-pro
+/src/Izenda.Synergy.Web/3rd_parties/jquery
+/src/Izenda.Synergy.Web/3rd_parties/react
+/src/Izenda.Synergy.Web/dist/development
+/src/Izenda.Synergy.Web/Izenda.Synergy.Web.sln
+/src/Izenda.Synergy.Web/Libraries - Shortcut.lnk
+logs
+/src/Izenda.Synergy.WebAPI/Config.txt
+/src/SolutionFiles/TestResults
+/src/Izenda.Synergy.WebAPI.MSBuild/Config.txt
+/src/Izenda.Synergy.WebAPI.MSBuild/Config_local.txt
+/src/Izenda.Synergy.WebAPI.MSBuild/Config_dev.txt
+/src/Izenda.Synergy.Exporting.Html/Settings.StyleCop
+/src/Izenda.Synergy.WebAPI/Config_local.txt
+/src/Izenda.Synergy.WebAPI/izendadb.config
+*.DS_Store
+/src/Izenda.Synergy.Exporting.PdfAzue

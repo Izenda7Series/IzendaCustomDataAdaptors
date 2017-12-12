@@ -1,0 +1,5 @@
+# Step to build and test
+	- Build solution
+	- Copy Izenda.BI.DataAdaptor.RDBMS.ODBC.dll and Izenda.BI.QueryNormalizer.ODBC.dll to Izenda API\bin folder
+	- Restart Izenda API server app
+	- Check that Data Server Type [ODBC] ODBC is existing on Data Server Type dropdown on Data Setup\Connection String\Add Connection page

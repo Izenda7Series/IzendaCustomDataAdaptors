@@ -135,25 +135,23 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
         public override IEnumerable<T> QueryMultiple<T>(string connectionString, string query, object param = null, int queryTimeout = 60, Action<SqlMapper.GridReader> action = null)
         {
-            query = NormalizeQuery(query);
+            throw new NotSupportedException("Not support multiple query");
+        }
 
-            using (var connection = OpenConnection(connectionString))
-            {
-                try
-                {
-                    using (var data = connection.QueryMultiple(query, param, commandTimeout: queryTimeout))
-                    {
-                        var result = data.Read<T>();
-                        action?.Invoke(data);
-                        return result;
-                    }
-                }
-                catch (OdbcException ex)
-                {
-                    Log("Query error: " + ex.ToString(), LogType.Error);
-                    throw new FusionException($"{Messages.FusionCanNotQueryData}{Environment.NewLine}Error Detail: {ex.Message}");
-                }
-            }
+        protected override IEnumerable<dynamic> GetPagingResult(string connectionString, string query, FusionContextData context)
+        {
+            var result = Query<dynamic>(connectionString, query,
+                context.Parameters, context.PerformanceSetting.QueryTimeoutValue);
+
+            var countTotalQuery = CountTotalCommand(context);
+            var totalRows = Query<int>(
+                connectionString,
+                countTotalQuery,
+                context.Parameters,
+                context.PerformanceSetting.QueryTimeoutValue).AsList()[0];
+
+            context.Paging.Total = context.RowLimit > 0 ? Math.Min(context.RowLimit, totalRows) : totalRows;
+            return result;
         }
 
         protected override string NormalizeQuery(string query)

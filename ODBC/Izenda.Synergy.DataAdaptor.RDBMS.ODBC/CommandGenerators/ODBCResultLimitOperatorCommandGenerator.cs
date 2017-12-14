@@ -30,6 +30,8 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.Framework.Components.QueryExpressionTree;
+using Izenda.BI.Framework.Components.QueryExpressionTree.Operator;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
@@ -37,6 +39,21 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
     {
         public ODBCResultLimitOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
         {
+        }
+
+        /// <summary>
+        /// Generate query for operand
+        /// </summary>
+        /// <param name="treeNode">QueryTreeNode object</param>
+        /// <param name="childCommand">The child command</param>
+        /// <returns>The query</returns>
+        public override string GenerateCommand(QueryTreeNode treeNode, string childCommand)
+        {
+            var resultLimitOperator = treeNode as ResultLimitOperator;
+            var query = @"SELECT * FROM ({0}) X LIMIT {1}";
+            var resultLimit = string.Format(query, childCommand, resultLimitOperator.Limit);
+            visitor.ContextData.TempData["resultLimit"] = resultLimit;
+            return resultLimit;
         }
     }
 }

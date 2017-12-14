@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCEquivalenceFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCFilterCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCDistinctOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCGroupingOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCJoinOperatorCommandGenerator.cs" />

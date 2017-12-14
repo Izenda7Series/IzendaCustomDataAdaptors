@@ -38,5 +38,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
         {
         }
+
+        public override string DefaultGroupBy => string.Empty;
     }
 }

@@ -38,5 +38,10 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         public ODBCJoinOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
         {
         }
+
+        protected override string GetParameterName(string parameterName)
+        {
+            return "?";
+        }
     }
 }

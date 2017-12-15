@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCCalendarWeek.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,26 +29,15 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators.DateTimeGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators.DateTimeGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// Generate calendar week filter.
+    /// </summary>
+    public class ODBCCalendarWeek : CalendarWeek
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
-        /// <summary>
-        /// The default group by
-        /// </summary>
-        public override string DefaultGroupBy
-        {
-            get
-            {
-                return string.Empty;
-
-            }
-        }
+       
     }
 }

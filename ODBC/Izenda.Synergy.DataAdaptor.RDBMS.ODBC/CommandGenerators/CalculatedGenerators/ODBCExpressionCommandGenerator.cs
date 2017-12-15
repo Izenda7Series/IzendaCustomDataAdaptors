@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCExpressionCommandGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -33,21 +33,20 @@ using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// OracleExpressionCommandGenerator
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ExpressionCommandGenerator" />
+    public class ODBCExpressionCommandGenerator : ExpressionCommandGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
         /// <summary>
-        /// The default group by
+        /// Gets the expression command generator visitor.
         /// </summary>
-        public override string DefaultGroupBy
+        public override ExpressionCommandGeneratorVisitor ExpressionCommandGeneratorVisitor
         {
             get
             {
-                return string.Empty;
-
+                return new ODBCExpressionCommandGeneratorVisitor();
             }
         }
     }

@@ -26,5 +26,14 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 
             return visitor.NodeData[operand.Id];
         }
+
+        /// <summary>
+        /// Applies the advanced setting.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        protected override void ApplyAdvancedSetting(FusionContextData context)
+        {
+
+        }
     }
 }

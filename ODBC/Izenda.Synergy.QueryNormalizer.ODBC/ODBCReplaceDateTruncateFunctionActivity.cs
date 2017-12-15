@@ -76,7 +76,7 @@ namespace Izenda.BI.QueryNormalizer.ODBC
                 index = sql.IndexOf(dateTruncate, StringComparison.OrdinalIgnoreCase);
             }
 
-            context.Query = sql;//UNDONE: above is only applied for Redshift
+            context.Query = sql;
         }
     }
 }

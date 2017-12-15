@@ -14,5 +14,10 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
         }
 
         protected override string DatabasePrefix => "ODBC";
+
+        protected override string GetParameterName(string parameterName)
+        {
+            return "?";
+        }
     }
 }

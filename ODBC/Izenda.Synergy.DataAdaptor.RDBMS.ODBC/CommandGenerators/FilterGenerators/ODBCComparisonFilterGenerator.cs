@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCComparisonFilterGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,26 +29,15 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// Generate comparison filter.
+    /// </summary>
+    public class ODBCComparisonFilterGenerator : ComparisonFilterGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
-        /// <summary>
-        /// The default group by
-        /// </summary>
-        public override string DefaultGroupBy
-        {
-            get
-            {
-                return string.Empty;
-
-            }
-        }
+        //This is intended for reflection purpose such as load correct DatabaseFunctionFormat
     }
 }

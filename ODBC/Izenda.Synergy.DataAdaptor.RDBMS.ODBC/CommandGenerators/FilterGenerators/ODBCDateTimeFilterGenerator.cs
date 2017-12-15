@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCDateTimeFilterGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,25 +29,23 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// Generate date time filter.
+    /// </summary>
+    public class ODBCDateTimeFilterGenerator : DateTimeFilterGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
         /// <summary>
-        /// The default group by
+        /// The namespace of filter generator
         /// </summary>
-        public override string DefaultGroupBy
+        protected override string DatabasePrefix
         {
             get
             {
-                return string.Empty;
-
+                return "ODBC";
             }
         }
     }

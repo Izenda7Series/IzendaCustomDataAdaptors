@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCNullFilterGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,26 +29,19 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// ODBCNullFilterGenerator
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators.NullFilterGenerator" />
+    public class ODBCNullFilterGenerator : NullFilterGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
-        /// <summary>
-        /// The default group by
-        /// </summary>
-        public override string DefaultGroupBy
-        {
-            get
-            {
-                return string.Empty;
-
-            }
-        }
     }
 }

@@ -245,7 +245,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
         /// </returns>
         private List<QuerySourceField> LoadFieldsFromProcedure(string connectionString, string type, string categoryName, string querySourceName, List<QuerySourceParameter> parameters = null, bool ignoreError = true, BI.Logging.ILog log = null)
         {
-            return new List<QuerySourceField>();//UNDONE: load fields from procedures
+            return new List<QuerySourceField>();//UNDONE: load fields from procedures - Snowflake does not support procedure
             //var result = new List<QuerySourceField>();
             //var dataTypeAdaptor = new RedshiftSupportDataType();
 

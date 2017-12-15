@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCConvertTokenCommandGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -30,25 +30,34 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// ODBCConvertTokenCommandGenerator
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ConvertTokenCommandGenerator" />
+    public class ODBCConvertTokenCommandGenerator : ConvertTokenCommandGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyODBCConvertTokenCommandGenerator"/> class.
+        /// </summary>
+        /// <param name="visitor">The visitor.</param>
+        public ODBCConvertTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
         {
         }
 
         /// <summary>
-        /// The default group by
+        /// Gets the type of the database support data.
         /// </summary>
-        public override string DefaultGroupBy
+        public override DatabaseSupportDataType DatabaseSupportDataType
         {
             get
             {
-                return string.Empty;
-
+                return new SnowflakeSupportDataType();
             }
-        }
+        }        
     }
 }

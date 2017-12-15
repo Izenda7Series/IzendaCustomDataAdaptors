@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCTextFormatNullToEmpty.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,26 +29,20 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.NullToEmptyConverter;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.NullToEmptyConverter
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// ODBCTextFormatNullToEmpty
+    /// </summary>
+    public class ODBCTextFormatNullToEmpty: TextFormatNullToEmpty, INullToEmptyConvert
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
 
-        /// <summary>
-        /// The default group by
-        /// </summary>
-        public override string DefaultGroupBy
-        {
-            get
-            {
-                return string.Empty;
-
-            }
-        }
     }
 }

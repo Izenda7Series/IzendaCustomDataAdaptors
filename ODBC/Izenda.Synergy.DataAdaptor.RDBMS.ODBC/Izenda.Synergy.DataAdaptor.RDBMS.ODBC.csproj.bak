@@ -63,17 +63,11 @@
     <Reference Include="Izenda.BI.Logging">
       <HintPath>..\libs\Izenda\Izenda.BI.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="Izenda.BI.QueryNormalizer.Utility">
-      <HintPath>..\libs\Izenda\Izenda.BI.QueryNormalizer.Utility.dll</HintPath>
-    </Reference>
     <Reference Include="Izenda.BI.RDBMS">
       <HintPath>..\libs\Izenda\Izenda.BI.RDBMS.dll</HintPath>
     </Reference>
     <Reference Include="Izenda.BI.Resource">
       <HintPath>..\libs\Izenda\Izenda.BI.Resource.dll</HintPath>
-    </Reference>
-    <Reference Include="Izenda.BI.Utility">
-      <HintPath>..\libs\Izenda\Izenda.BI.Utility.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -86,34 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCAvgTokenCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCCastTokenCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCConvertTokenCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCExpressionCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCExpressionCommandGeneratorVisitor.cs" />
-    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSumTokenCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarMonth.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarQuarter.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarWeek.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarYear.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCDay.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCFiscalQuarter.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCFiscalYear.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCLongTermPeriod.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCSecond.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCEquivalenceFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCFilterCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCBlankFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCBooleanFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCComparisonFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCDateTimeFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCFieldComparisonFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCNotBlankFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCNotNullFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCNullFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCStringFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCThreeDotsFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\NullToEmptyConverter\ODBCTextFormatNullToEmpty.cs" />
+    <Compile Include="CommandGenerators\ODBCDistinctOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCGroupingOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCJoinOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCOperandCommandGenerator.cs" />
@@ -123,8 +92,11 @@
     <Compile Include="CommandGenerators\ODBCQueryTreeCommandGeneratorVisitor.cs" />
     <Compile Include="CommandGenerators\ODBCResultLimitOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectionOperatorCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\ODBCSelectFieldCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSortingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSubTotalOperatorCommandGenerator.cs" />
+    <Compile Include="Constants\ODBCSupportDataType.cs" />
     <Compile Include="Constants\SnowflakeSupportDataType.cs" />
+    <Compile Include="Constants\RedshiftSupportDataType.cs" />
     <Compile Include="ODBCConnection.cs" />
     <Compile Include="ODBCDataSourceAdaptor.cs" />
     <Compile Include="ODBCSchemaLoader.cs" />

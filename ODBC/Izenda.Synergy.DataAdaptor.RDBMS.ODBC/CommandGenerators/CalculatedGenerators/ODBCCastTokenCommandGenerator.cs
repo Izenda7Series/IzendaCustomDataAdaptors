@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCCastTokenCommandGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -27,28 +27,32 @@
 //  CONSULT THE END USER LICENSE AGREEMENT(EULA FOR INFORMATION ON  
 //  ADDITIONAL RESTRICTIONS.
 // </copyright> 
-// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------  				
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// ODBCCastTokenCommandGenerator
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.CastTokenCommandGenerator" />
+    public class ODBCCastTokenCommandGenerator : CastTokenCommandGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
+        /// <summary>
+        /// Gets the type of the database support data.
+        /// </summary>
+        public override DatabaseSupportDataType DatabaseSupportDataType => new SnowflakeSupportDataType();
 
         /// <summary>
-        /// The default group by
+        /// Initializes a new instance of the <see cref="ODBCCastTokenCommandGenerator"/> class.
         /// </summary>
-        public override string DefaultGroupBy
+        /// <param name="visitor">The visitor.</param>
+        public ODBCCastTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
         {
-            get
-            {
-                return string.Empty;
 
-            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCAvgTokenCommandGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -30,25 +30,45 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.Framework.Components.ExpressionEvaluations;
+using Izenda.BI.Framework.Components.ExpressionEvaluations.Functions;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// AvgTokenCommandGenerator
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.AggregateFunctionTokenCommandGenerator" />
+    public class ODBCAvgTokenCommandGenerator : AvgTokenCommandGenerator
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AvgTokenCommandGenerator"/> class.
+        /// </summary>
+        /// <param name="visitor">The visitor.</param>
+        public ODBCAvgTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
         {
+
         }
 
         /// <summary>
-        /// The default group by
+        /// Generate query for Token
         /// </summary>
-        public override string DefaultGroupBy
+        /// <param name="token"></param>
+        /// <returns>
+        /// The query
+        /// </returns>
+        public override string GenerateSelfCommand(Token token)
         {
-            get
-            {
-                return string.Empty;
+            var aggregatedFunctionToken = token as AggregateToken;
+            var subTrees = aggregatedFunctionToken.SubTrees;
 
-            }
+            string expression = visitor.NodeData[(subTrees["1"] as Token).TokenId];
+
+            return string.Format("{0}({2} CAST({1} AS DECIMAL(28,8)))",
+                                 "AVG",
+                                 expression,
+                                 aggregatedFunctionToken.Distinct ? DatabaseFunction.Distinct + " " : ""
+                                 );
         }
     }
 }

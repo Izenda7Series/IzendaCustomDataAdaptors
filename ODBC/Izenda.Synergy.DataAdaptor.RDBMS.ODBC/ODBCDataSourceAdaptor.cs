@@ -127,7 +127,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                 }
                 catch (OdbcException ex)
                 {
-                    Log("Query error: " + ex.ToString(), LogType.Error);
+                    Log($"Query error: {ex.ToString()}. {Environment.NewLine}Query: {query}", LogType.Error);
                     throw new FusionException($"{Messages.FusionCanNotQueryData}{Environment.NewLine}Error Detail: {ex.Message}");
                 }
             }

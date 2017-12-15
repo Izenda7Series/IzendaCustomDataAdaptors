@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCExpressionCommandGeneratorVisitor.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -30,24 +30,57 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCGroupingOperatorCommandGenerator : GroupingOperatorCommandGenerator
+    /// <summary>
+    /// ODBCExpressionCommandGeneratorVisitor
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ExpressionCommandGeneratorVisitor" />
+    public class ODBCExpressionCommandGeneratorVisitor : ExpressionCommandGeneratorVisitor
     {
-        public ODBCGroupingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
         /// <summary>
-        /// The default group by
+        /// Gets the cast token command generator.
         /// </summary>
-        public override string DefaultGroupBy
+        public override AvgTokenCommandGenerator AvgTokenCommandGenerator
         {
             get
             {
-                return string.Empty;
+                return new ODBCAvgTokenCommandGenerator(this);
+            }
+        }
 
+        /// <summary>
+        /// Gets the cast token command generator.
+        /// </summary>
+        public override SumTokenCommandGenerator SumTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCSumTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the convert token command generator.
+        /// </summary>
+        public override ConvertTokenCommandGenerator ConvertTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCConvertTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the cast token command generator.
+        /// </summary>
+        public override CastTokenCommandGenerator CastTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCCastTokenCommandGenerator(this);
             }
         }
     }

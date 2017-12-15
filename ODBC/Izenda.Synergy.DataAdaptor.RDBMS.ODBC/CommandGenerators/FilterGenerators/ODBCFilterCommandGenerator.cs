@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Izenda.BI.Framework.Models;
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
 {
@@ -15,9 +16,6 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
 
         protected override string DatabasePrefix => "ODBC";
 
-        protected override string GetParameterName(string parameterName)
-        {
-            return "?";
-        }
+        public override NameFormatter NameFormatter => new ODBCNameFormatter();        
     }
 }

@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCNameFormatter.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -30,15 +30,27 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCJoinOperatorCommandGenerator : JoinOperatorCommandGenerator
+    /// <summary>
+    /// ODBCNameFormatter
+    /// </summary>
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.NameFormatter" />
+    public class ODBCNameFormatter : NameFormatter
     {
-        public ODBCJoinOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
+        /// <summary>
+        /// Formats the parameter.
+        /// </summary>
+        /// <param name="parameterName">Name of the parameter.</param>
+        /// <returns></returns>
+        public override string FormatParameter(string parameterName)
         {
+            return "?";
         }
-
-        public override NameFormatter NameFormatter => new ODBCNameFormatter();
     }
 }

@@ -113,6 +113,7 @@
     <Compile Include="CommandGenerators\FilterGenerators\ODBCNullFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCStringFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCThreeDotsFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\Formatter\ODBCNameFormatter.cs" />
     <Compile Include="CommandGenerators\NullToEmptyConverter\ODBCTextFormatNullToEmpty.cs" />
     <Compile Include="CommandGenerators\ODBCGroupingOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCJoinOperatorCommandGenerator.cs" />
@@ -123,7 +124,6 @@
     <Compile Include="CommandGenerators\ODBCQueryTreeCommandGeneratorVisitor.cs" />
     <Compile Include="CommandGenerators\ODBCResultLimitOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectionOperatorCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\ODBCSelectFieldCommandGenerator.cs" />
     <Compile Include="Constants\SnowflakeSupportDataType.cs" />
     <Compile Include="ODBCConnection.cs" />
     <Compile Include="ODBCDataSourceAdaptor.cs" />

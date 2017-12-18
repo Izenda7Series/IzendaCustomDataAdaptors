@@ -112,8 +112,8 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
             try
             {
-                using (var transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
-                {
+                //using (var transaction = new TransactionScope(TransactionScopeOption.RequiresNew))//UNDONE: workaround ODBC transaction issue
+                //{
                     using (var conn = new OdbcConnection(connectionString))
                     {
                         conn.Open();
@@ -140,7 +140,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                             );
                         }
                     }
-                }
+                //}
             }
             catch (OdbcException ex)
             {

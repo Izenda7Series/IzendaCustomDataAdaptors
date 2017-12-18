@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCConvertTokenCommandGenerator.cs" company="Izenda">
+// <copyright file="ODBCDateAddTokenCommandGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -32,32 +32,36 @@
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
 using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
+using Izenda.BI.Framework.Components.ExpressionEvaluations;
+using Izenda.BI.Framework.Components.ExpressionEvaluations.Functions;
+using Izenda.BI.Framework.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
     /// <summary>
-    /// ODBCConvertTokenCommandGenerator
+    /// ODBCLenTokenCommandGenerator
     /// </summary>
-    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ConvertTokenCommandGenerator" />
-    public class ODBCConvertTokenCommandGenerator : ConvertTokenCommandGenerator
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.DateAddTokenCommandGenerator" />
+    public class ODBCLenTokenCommandGenerator : LenTokenCommandGenerator
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ODBCConvertTokenCommandGenerator"/> class.
+        /// Initializes a new instance of the <see cref="ODBCLenTokenCommandGenerator"/> class.
         /// </summary>
         /// <param name="visitor">The visitor.</param>
-        public ODBCConvertTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
+        public ODBCLenTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
         {
+
         }
 
         /// <summary>
-        /// Gets the type of the database support data.
-        /// </summary>
-        public override DatabaseSupportDataType DatabaseSupportDataType
+        /// Gets the database function.
+        /// </summary>        
+        public override DatabaseFunction DatabaseFunction
         {
             get
             {
-                return new SnowflakeSupportDataType();
+                return new SnowflakeDatabaseFunction();
             }
-        }        
+        }
     }
 }

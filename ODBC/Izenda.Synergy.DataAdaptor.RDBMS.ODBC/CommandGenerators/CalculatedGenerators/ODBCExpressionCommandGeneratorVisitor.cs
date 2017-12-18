@@ -83,5 +83,71 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
                 return new ODBCCastTokenCommandGenerator(this);
             }
         }
+
+        /// <summary>
+        /// Gets the date difference token command generator.
+        /// </summary>        
+        public override DateDiffTokenCommandGenerator DateDiffTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCDateDiffTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the date part token command generator.
+        /// </summary>        
+        public override DatePartTokenCommandGenerator DatePartTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCDatePartTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the date add token command generator.
+        /// </summary>
+        public override DateAddTokenCommandGenerator DateAddTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCDateAddTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the get date token command generator.
+        /// </summary>        
+        public override GetDateTokenCommandGenerator GetDateTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCGetDateTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the is null token command generator.
+        /// </summary>        
+        public override IsNullTokenCommandGenerator IsNullTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCIsNullTokenCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the length token command generator.
+        /// </summary>       
+        public override LenTokenCommandGenerator LenTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCLenTokenCommandGenerator(this);
+            }
+        }
     }
 }

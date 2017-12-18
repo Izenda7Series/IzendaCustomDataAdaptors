@@ -86,6 +86,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCIsNullTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCLenTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCGetDateTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCDateDiffTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCDateAddTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCDatePartTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCAvgTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCCastTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCConvertTokenCommandGenerator.cs" />
@@ -113,10 +119,10 @@
     <Compile Include="CommandGenerators\FilterGenerators\ODBCNullFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCStringFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCThreeDotsFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\Formatter\ODBCNameFormatter.cs" />
     <Compile Include="CommandGenerators\NullToEmptyConverter\ODBCTextFormatNullToEmpty.cs" />
     <Compile Include="CommandGenerators\ODBCGroupingOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCJoinOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\Formatter\ODBCNameFormatter.cs" />
     <Compile Include="CommandGenerators\ODBCOperandCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCPagingOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCProjectionOperatorCommandGenerator.cs" />
@@ -124,6 +130,11 @@
     <Compile Include="CommandGenerators\ODBCQueryTreeCommandGeneratorVisitor.cs" />
     <Compile Include="CommandGenerators\ODBCResultLimitOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectionOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSelectFieldCommandGenerator.cs" />
+    <Compile Include="Constants\SnowflakeSelectFieldCommandFormat.cs" />
+    <Compile Include="Constants\SnowflakeDatabaseFunctionFormat.cs" />
+    <Compile Include="Constants\SnowflakeDatabaseConstants.cs" />
+    <Compile Include="Constants\SnowflakeDatabaseFunction.cs" />
     <Compile Include="Constants\SnowflakeSupportDataType.cs" />
     <Compile Include="ODBCConnection.cs" />
     <Compile Include="ODBCDataSourceAdaptor.cs" />

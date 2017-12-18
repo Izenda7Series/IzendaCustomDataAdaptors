@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCConvertTokenCommandGenerator.cs" company="Izenda">
+// <copyright file="SnowflakeDatabaseConstants.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -27,37 +27,22 @@
 //  CONSULT THE END USER LICENSE AGREEMENT(EULA FOR INFORMATION ON  
 //  ADDITIONAL RESTRICTIONS.
 // </copyright> 
-// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------  				
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
+using Izenda.BI.Framework.Constants;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
 {
     /// <summary>
-    /// ODBCConvertTokenCommandGenerator
+    /// SnowflakeDatabaseConstants
     /// </summary>
-    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ConvertTokenCommandGenerator" />
-    public class ODBCConvertTokenCommandGenerator : ConvertTokenCommandGenerator
+    public class SnowflakeDatabaseConstants : DatabaseConstants
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ODBCConvertTokenCommandGenerator"/> class.
-        /// </summary>
-        /// <param name="visitor">The visitor.</param>
-        public ODBCConvertTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
-        /// <summary>
-        /// Gets the type of the database support data.
-        /// </summary>
-        public override DatabaseSupportDataType DatabaseSupportDataType
-        {
-            get
-            {
-                return new SnowflakeSupportDataType();
-            }
-        }        
+        //UNDONE: identify date part const name
     }
 }

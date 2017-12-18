@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCConvertTokenCommandGenerator.cs" company="Izenda">
+// <copyright file="SnowflakeDatabaseFunction.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,35 +29,58 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
 {
     /// <summary>
-    /// ODBCConvertTokenCommandGenerator
+    /// SnowflakeDatabaseFunction
     /// </summary>
-    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ConvertTokenCommandGenerator" />
-    public class ODBCConvertTokenCommandGenerator : ConvertTokenCommandGenerator
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.Constants.DatabaseFunction" />
+    public class SnowflakeDatabaseFunction : DatabaseFunction
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ODBCConvertTokenCommandGenerator"/> class.
-        /// </summary>
-        /// <param name="visitor">The visitor.</param>
-        public ODBCConvertTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
-        /// <summary>
-        /// Gets the type of the database support data.
-        /// </summary>
-        public override DatabaseSupportDataType DatabaseSupportDataType
+        /// Gets the date part.
+        /// </summary>        
+        public override string DatePart
         {
             get
             {
-                return new SnowflakeSupportDataType();
+                return "DATE_PART";
             }
-        }        
+        }
+
+        /// <summary>
+        /// Gets the length.
+        /// </summary>        
+        public override string Len
+        {
+            get
+            {
+                return "LENGTH";
+            }
+        }
+
+        /// <summary>
+        /// Gets the get date.
+        /// </summary>        
+        public override string GetDate
+        {
+            get
+            {
+                return "CURRENT_DATE";
+            }
+        }
+
+        /// <summary>
+        /// Gets the is null.
+        /// </summary>        
+        public override string IsNull
+        {
+            get
+            {
+                return "IFNULL";
+            }
+        }
     }
 }

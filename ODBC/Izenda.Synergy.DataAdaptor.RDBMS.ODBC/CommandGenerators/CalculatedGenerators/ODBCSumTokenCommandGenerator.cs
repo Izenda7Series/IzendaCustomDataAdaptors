@@ -42,7 +42,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
     public class ODBCSumTokenCommandGenerator : SumTokenCommandGenerator
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SumTokenCommandGenerator"/> class.
+        /// Initializes a new instance of the <see cref="ODBCSumTokenCommandGenerator"/> class.
         /// </summary>
         /// <param name="visitor">The visitor.</param>
         public ODBCSumTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)

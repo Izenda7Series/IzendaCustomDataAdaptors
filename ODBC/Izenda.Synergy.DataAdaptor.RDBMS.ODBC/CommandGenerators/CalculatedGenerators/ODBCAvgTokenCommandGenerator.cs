@@ -42,7 +42,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
     public class ODBCAvgTokenCommandGenerator : AvgTokenCommandGenerator
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AvgTokenCommandGenerator"/> class.
+        /// Initializes a new instance of the <see cref="ODBCAvgTokenCommandGenerator"/> class.
         /// </summary>
         /// <param name="visitor">The visitor.</param>
         public ODBCAvgTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)

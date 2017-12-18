@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCConvertTokenCommandGenerator.cs" company="Izenda">
+// <copyright file="SnowflakeDatabaseFunctionFormat.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,35 +29,83 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
-using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
-using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
+using Izenda.BI.DataAdaptor.RDBMS.Constants;
+
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
 {
     /// <summary>
-    /// ODBCConvertTokenCommandGenerator
+    /// Database Function Format
     /// </summary>
-    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.ConvertTokenCommandGenerator" />
-    public class ODBCConvertTokenCommandGenerator : ConvertTokenCommandGenerator
+    public class SnowflakeDatabaseFunctionFormat : DatabaseFunctionFormat
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ODBCConvertTokenCommandGenerator"/> class.
+        /// Get date diff month format
         /// </summary>
-        /// <param name="visitor">The visitor.</param>
-        public ODBCConvertTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
-        {
-        }
-
-        /// <summary>
-        /// Gets the type of the database support data.
-        /// </summary>
-        public override DatabaseSupportDataType DatabaseSupportDataType
+        /// <returns>The date diff month format</returns>
+        public override string DateDiffMonthFormat
         {
             get
             {
-                return new SnowflakeSupportDataType();
+                return "DATEDIFF(month, {0}::timestamp, {1}::timestamp)";
             }
-        }        
+        }
+
+        /// <summary>
+        /// Get date diff year format
+        /// </summary>
+        /// <returns>The date diff year format</returns>
+        public override string DateDiffYearFormat
+        {
+            get
+            {
+                return "DATEDIFF(year, {0}::timestamp, {1}::timestamp)";
+            }
+        }
+
+        /// <summary>
+        /// Get date diff day format
+        /// </summary>
+        /// <returns>The date diff year format</returns>
+        public override string DateDiffDayFormat
+        {
+            get
+            {
+                return "DATEDIFF(day, {0}::timestamp, {1}::timestamp)";
+            }
+        }
+
+        /// <summary>
+        /// Gets the check blank format text.
+        /// </summary>       
+        public override string CheckBlankFormatText
+        {
+            get
+            {
+                return @"[[{0}]] = ''";
+            }
+        }
+
+        /// <summary>
+        /// Check not blank format
+        /// </summary>
+        public override string CheckNotBlankFormat
+        {
+            get
+            {
+                return "([[{0}]] IS NULL OR [[{0}]] <> '')";
+            }
+        }
+
+        /// <summary>
+        /// Gets the check not blank format text.
+        /// </summary>     
+        public override string CheckNotBlankFormatText
+        {
+            get
+            {
+                return "([[{0}]] IS NULL OR [[{0}]] <> '')";
+            }
+        }
     }
 }

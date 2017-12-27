@@ -44,7 +44,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         /// <summary>
         /// Gets the type of the database support data.
         /// </summary>
-        public override DatabaseSupportDataType DatabaseSupportDataType => new SnowflakeSupportDataType();
+        public override DatabaseSupportDataType DatabaseSupportDataType => new ODBCSupportDataType();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ODBCCastTokenCommandGenerator"/> class.

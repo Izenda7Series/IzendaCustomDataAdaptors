@@ -36,7 +36,7 @@ using Izenda.BI.Framework.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCPagingOperatorCommandGenerator : PagingOperatorCommandGenerator
+    public class ODBCPagingOperatorCommandGenerator : PagingOperatorCommandGenerator
     {
         public ODBCPagingOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
         {

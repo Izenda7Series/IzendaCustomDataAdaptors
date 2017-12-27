@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Izenda.BI.QueryNormalizer.ODBC
+namespace Izenda.BI.QueryNormalizer.ODBC.Redshift
 {
-    public abstract class ODBCQueryNormalizerActivity : IActivity<QueryNormalizerContext>
+    public abstract class ODBCRedshiftQueryNormalizerActivity : IActivity<QueryNormalizerContext>
     {
         public abstract int Order { get;  }
 

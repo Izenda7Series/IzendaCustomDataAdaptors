@@ -60,7 +60,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         {
             get
             {
-                return new SnowflakeDatabaseFunction();
+                return new ODBCDatabaseFunction();
             }
         }
     }

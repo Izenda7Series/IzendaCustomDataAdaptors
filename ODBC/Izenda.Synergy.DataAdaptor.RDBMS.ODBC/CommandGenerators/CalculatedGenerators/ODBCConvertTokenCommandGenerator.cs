@@ -56,7 +56,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
         {
             get
             {
-                return new SnowflakeSupportDataType();
+                return new ODBCSupportDataType();
             }
         }        
     }

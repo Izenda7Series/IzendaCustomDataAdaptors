@@ -7,8 +7,8 @@
     <ProjectGuid>{61FC99F7-CBEE-4154-A354-9A578242C1CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Izenda.BI.QueryNormalizer.ODBC</RootNamespace>
-    <AssemblyName>Izenda.BI.QueryNormalizer.ODBC</AssemblyName>
+    <RootNamespace>Izenda.BI.QueryNormalizer.ODBC.Snowflake</RootNamespace>
+    <AssemblyName>Izenda.BI.QueryNormalizer.ODBC.Snowflake</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,12 +63,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ODBCQueryNormalizerActivity.cs" />
+    <Compile Include="ODBCSnowflakeQueryNormalizerActivity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ODBCReplaceConcatFunctionActivity.cs" />
-    <Compile Include="ODBCReplaceDateTruncateFunctionActivity.cs" />
-    <Compile Include="ODBCEscapeTableNameActivity.cs" />
-    <Compile Include="ODBCInsertEscapePipeActivity.cs" />
+    <Compile Include="ODBCSnowflakeReplaceConcatFunctionActivity.cs" />
+    <Compile Include="ODBCSnowflakeReplaceDateTruncateFunctionActivity.cs" />
+    <Compile Include="ODBCSnowflakeEscapeTableNameActivity.cs" />
+    <Compile Include="ODBCSnowflakeInsertEscapePipeActivity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

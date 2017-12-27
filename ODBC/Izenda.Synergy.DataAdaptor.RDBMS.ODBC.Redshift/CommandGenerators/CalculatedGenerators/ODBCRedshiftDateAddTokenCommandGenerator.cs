@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCEscapeTableNameActivity.cs" company="Izenda">
+// <copyright file="ODBCDateAddTokenCommandGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,37 +29,54 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants;
+using Izenda.BI.Framework.Components.ExpressionEvaluations;
+using Izenda.BI.Framework.Components.ExpressionEvaluations.Functions;
+using Izenda.BI.Framework.Constants;
 
-using Izenda.BI.Framework.Models.Contexts;
-
-namespace Izenda.BI.QueryNormalizer.ODBC
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
     /// <summary>
-    /// Escapse table name
+    /// ODBCDateAddTokenCommandGenerator
     /// </summary>
-    public class ODBCEscapeTableNameActivity : ODBCQueryNormalizerActivity
-    {
+    /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.DateAddTokenCommandGenerator" />
+    public class ODBCRedshiftDateAddTokenCommandGenerator : DateAddTokenCommandGenerator
+    {        
         /// <summary>
-        /// The activity order
+        /// Initializes a new instance of the <see cref="ODBCDateAddTokenCommandGenerator"/> class.
         /// </summary>
-        public override int Order
+        /// <param name="visitor">The visitor.</param>
+        public ODBCRedshiftDateAddTokenCommandGenerator(ExpressionCommandGeneratorVisitor visitor) : base(visitor)
+        {
+
+        }
+
+        /// <summary>
+        /// Gets the database function.
+        /// </summary>        
+        public override DatabaseFunction DatabaseFunction
         {
             get
             {
-                return 20;
+                return new Redshift.Constants.RedshiftDatabaseFunction();
             }
         }
 
         /// <summary>
-        /// Execute the activity
+        /// Gets the database constants.
         /// </summary>
-        /// <param name="context">The context</param>
-        public override void Execute(QueryNormalizerContext context)
+        /// <value>
+        /// The database constants.
+        /// </value>
+        public override DatabaseConstants DatabaseConstants
         {
-            var sql = context.Query;
-            sql = sql.Replace("[[", "\"").Replace("]]", "\"");
-
-            context.Query = sql;
+            get
+            {
+                return new RedshiftDatabaseConstants();
+            }
         }
     }
 }

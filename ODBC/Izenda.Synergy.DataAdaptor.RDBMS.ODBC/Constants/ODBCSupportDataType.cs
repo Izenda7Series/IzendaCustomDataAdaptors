@@ -1,13 +1,9 @@
 ﻿using Izenda.BI.DataAdaptor.RDBMS.Constants;
 using Izenda.BI.Framework.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
 {
-    public class ODBCSupportDataType : DatabaseSupportDataType
+    public partial class ODBCSupportDataType : DatabaseSupportDataType
     {
         /// <summary>
         /// Constructor

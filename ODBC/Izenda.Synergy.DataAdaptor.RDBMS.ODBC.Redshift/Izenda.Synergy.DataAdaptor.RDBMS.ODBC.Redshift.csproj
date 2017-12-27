@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E5C1E11D-8D1A-4C21-B799-77CC019156A4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift</RootNamespace>
+    <AssemblyName>Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
+      <HintPath>..\libs\Izenda\Izenda.BI.DataAdaptor.RDBMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.DataSourceAdapter">
+      <HintPath>..\libs\Izenda\Izenda.BI.DataSourceAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Framework">
+      <HintPath>..\libs\Izenda\Izenda.BI.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Logging">
+      <HintPath>..\libs\Izenda\Izenda.BI.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.QueryNormalizer.Utility">
+      <HintPath>..\libs\Izenda\Izenda.BI.QueryNormalizer.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.RDBMS">
+      <HintPath>..\libs\Izenda\Izenda.BI.RDBMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Resource">
+      <HintPath>..\libs\Izenda\Izenda.BI.Resource.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Utility">
+      <HintPath>..\libs\Izenda\Izenda.BI.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftIsNullTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftCastTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftConvertTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftDateAddTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftDateDiffTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftDatePartTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftExpressionCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftExpressionCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftQueryTreeCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftQueryTreeCommandGeneratorVisitor.cs" />
+    <Compile Include="Constants\RedshiftSupportDataType.cs" />
+    <Compile Include="Constants\RedshiftSelectFieldCommandFormat.cs" />
+    <Compile Include="Constants\RedshiftDatabaseFunctionFormat.cs" />
+    <Compile Include="Constants\RedshiftDatabaseConstants.cs" />
+    <Compile Include="Constants\RedshiftDatabaseFunction.cs" />
+    <Compile Include="ODBCRedshiftDataSourceAdaptor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Izenda.Synergy.DataAdaptor.RDBMS.ODBC\Izenda.Synergy.DataAdaptor.RDBMS.ODBC.csproj">
+      <Project>{f212414e-dac6-4356-8f7b-5023a7410cf8}</Project>
+      <Name>Izenda.Synergy.DataAdaptor.RDBMS.ODBC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Izenda.Synergy.QueryNormalizer.ODBC.Redshift\Izenda.Synergy.QueryNormalizer.ODBC.Redshift.csproj">
+      <Project>{11539498-186c-4709-bc10-0b9e213aacb8}</Project>
+      <Name>Izenda.Synergy.QueryNormalizer.ODBC.Redshift</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

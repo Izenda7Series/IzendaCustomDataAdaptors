@@ -98,6 +98,7 @@
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCExpressionCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCExpressionCommandGeneratorVisitor.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSumTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCValueTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarMonth.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarQuarter.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarWeek.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="CommandGenerators\FilterGenerators\ODBCNullFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCStringFilterGenerator.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\ODBCThreeDotsFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\NullToEmptyConverter\ODBCTextFormatNullToEmpty.cs" />
     <Compile Include="CommandGenerators\ODBCGroupingOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCJoinOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\Formatter\ODBCNameFormatter.cs" />
@@ -131,21 +131,16 @@
     <Compile Include="CommandGenerators\ODBCResultLimitOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectionOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectFieldCommandGenerator.cs" />
-    <Compile Include="Constants\SnowflakeSelectFieldCommandFormat.cs" />
-    <Compile Include="Constants\SnowflakeDatabaseFunctionFormat.cs" />
-    <Compile Include="Constants\SnowflakeDatabaseConstants.cs" />
-    <Compile Include="Constants\SnowflakeDatabaseFunction.cs" />
-    <Compile Include="Constants\SnowflakeSupportDataType.cs" />
+    <Compile Include="Constants\ODBCDatabaseConstants.cs" />
+    <Compile Include="Constants\ODBCDatabaseFunction.cs" />
+    <Compile Include="Constants\ODBCSupportDataType.cs" />
     <Compile Include="ODBCConnection.cs" />
     <Compile Include="ODBCDataSourceAdaptor.cs" />
     <Compile Include="ODBCSchemaLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Izenda.Synergy.QueryNormalizer.ODBC\Izenda.Synergy.QueryNormalizer.ODBC.csproj">
-      <Project>{61fc99f7-cbee-4154-a354-9a578242c1ce}</Project>
-      <Name>Izenda.Synergy.QueryNormalizer.ODBC</Name>
-    </ProjectReference>
+    <Folder Include="CommandGenerators\ConvertNullToEmptyGenerator\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

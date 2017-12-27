@@ -41,7 +41,6 @@ using Dapper;
 using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 using Izenda.BI.Framework.Components.SequenceWorkflows;
 using Izenda.BI.Framework.Models.Contexts;
-using Izenda.BI.QueryNormalizer.ODBC;
 using Izenda.BI.Framework.Exceptions;
 using Izenda.BI.Resource;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
@@ -50,31 +49,9 @@ using System.Data.Odbc;
 
 namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 {
-    [Export(typeof(IDataSourceAdaptor))]
-    [ExportMetadata("ServerType", "751A82D4-6B28-406E-AE8E-88035E72D0A8|ODBC|[ODBC] ODBC")]
-    [PartCreationPolicy(CreationPolicy.Shared)]
-    public class ODBCDataSourceAdaptor : DataSourceAdaptor
+    public abstract class ODBCDataSourceAdaptor : DataSourceAdaptor
     {
-        /// <summary>
-        /// The query normalizer
-        /// </summary>
-        ISequenceWorkflow<ODBCQueryNormalizerActivity, QueryNormalizerContext> queryNormalizer;
-
-        /// <summary>
-        /// The query normalizer
-        /// </summary>
-        protected ISequenceWorkflow<ODBCQueryNormalizerActivity, QueryNormalizerContext> QueryNormalizer
-        {
-            get
-            {
-                if (queryNormalizer == null)
-                {
-                    queryNormalizer = new SequenceWorkflow<ODBCQueryNormalizerActivity, QueryNormalizerContext>();
-                }
-
-                return queryNormalizer;
-            }
-        }
+        public abstract bool IsSupportedMultipleQuery { get; }
 
         public override IConnection Connection => new ODBCConnection();
 
@@ -98,14 +75,13 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
         {
             get
             {
-                throw new NotImplementedException("ODBC required feature");
-                return @"SELECT {0} FROM {1} FETCH FIRST 1 ROW ONLY";
+                throw new NotSupportedException("Get first value query has to override for each specific RDBMS");
             }
         }
 
         public override List<DatabaseDataType> GetBaseDataTypes()
         {
-            var dataTypeAdaptor = new SnowflakeSupportDataType();//TODO: ODBC supported data type
+            var dataTypeAdaptor = new ODBCSupportDataType();
             return dataTypeAdaptor.GetBaseDataTypes();
         }
 
@@ -136,11 +112,40 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
         public override IEnumerable<T> QueryMultiple<T>(string connectionString, string query, object param = null, int queryTimeout = 60, Action<SqlMapper.GridReader> action = null)
         {
+            if (IsSupportedMultipleQuery)
+            {
+                query = NormalizeQuery(query);
+
+                using (var connection = OpenConnection(connectionString))
+                {
+                    try
+                    {
+                        using (var result = connection.QueryMultiple(query, param, commandTimeout: queryTimeout))
+                        {
+                            var returnResult = result.Read<T>();
+                            action?.Invoke(result);
+                            return returnResult;
+                        }
+                    }
+                    catch (OdbcException ex)
+                    {
+                        Log($"Query error: {ex.ToString()}. {Environment.NewLine}Query: {query}", LogType.Error);
+                        throw new FusionException($"{Messages.FusionCanNotQueryData}{Environment.NewLine}Error Detail: {ex.Message}");
+                    }
+                }
+            }
+
             throw new NotSupportedException("Not support multiple query");
         }
 
         protected override IEnumerable<dynamic> GetPagingResult(string connectionString, string query, FusionContextData context)
         {
+            if (IsSupportedMultipleQuery)
+            {
+                return base.GetPagingResult(connectionString, query, context);
+            }
+
+            // If not supported mutiple query, execute two query separately
             var result = Query<dynamic>(connectionString, query,
                 context.Parameters, context.PerformanceSetting.QueryTimeoutValue);
 
@@ -157,9 +162,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
         protected override string NormalizeQuery(string query)
         {
-            var normalizerContext = new QueryNormalizerContext { Query = query };
-            QueryNormalizer.Execute(normalizerContext);
-            return normalizerContext.Query;
+            throw new NotSupportedException("Have to provide specific query normalizer for each RDBMS");
         }
     }
 }

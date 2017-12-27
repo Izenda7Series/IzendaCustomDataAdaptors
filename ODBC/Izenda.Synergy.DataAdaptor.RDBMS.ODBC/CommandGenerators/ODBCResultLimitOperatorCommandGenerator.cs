@@ -35,7 +35,7 @@ using Izenda.BI.Framework.Components.QueryExpressionTree.Operator;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCResultLimitOperatorCommandGenerator : ResultLimitOperatorCommandGenerator
+    public class ODBCResultLimitOperatorCommandGenerator : ResultLimitOperatorCommandGenerator
     {
         public ODBCResultLimitOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
         {

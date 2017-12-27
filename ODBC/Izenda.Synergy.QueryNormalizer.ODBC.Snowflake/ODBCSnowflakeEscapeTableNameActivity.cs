@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCReplaceDateTruncateFunctionActivity.cs" company="Izenda">
+// <copyright file="ODBCSnowflakeEscapeTableNameActivity.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -31,14 +31,13 @@
 
 
 using Izenda.BI.Framework.Models.Contexts;
-using System;
 
-namespace Izenda.BI.QueryNormalizer.ODBC
+namespace Izenda.BI.QueryNormalizer.ODBC.Snowflake
 {
     /// <summary>
-    /// Replace date truncate function
+    /// Escapse table name
     /// </summary>
-    public class ODBCReplaceDateTruncateFunctionActivity : ODBCQueryNormalizerActivity
+    public class ODBCSnowflakeEscapeTableNameActivity : ODBCSnowflakeQueryNormalizerActivity
     {
         /// <summary>
         /// The activity order
@@ -47,7 +46,7 @@ namespace Izenda.BI.QueryNormalizer.ODBC
         {
             get
             {
-                return 12;
+                return 20;
             }
         }
 
@@ -58,23 +57,7 @@ namespace Izenda.BI.QueryNormalizer.ODBC
         public override void Execute(QueryNormalizerContext context)
         {
             var sql = context.Query;
-            int index = -1;
-            var dateTruncate = "DATETRUNCATE";
-
-            index = sql.IndexOf(dateTruncate, StringComparison.OrdinalIgnoreCase);
-
-            while (index >= 0)
-            {
-                var openIndex = sql.IndexOf("(", index);
-                var closeIndex = sql.IndexOf(")", index);
-                var fieldName = sql.Substring(openIndex + 1, closeIndex - 1 - openIndex);
-                var replacedContent = string.Format("DATE_TRUNC({0})", fieldName);
-                var originalContent = sql.Substring(index, closeIndex - index + 1);
-
-                sql = sql.Replace(originalContent, replacedContent);
-
-                index = sql.IndexOf(dateTruncate, StringComparison.OrdinalIgnoreCase);
-            }
+            sql = sql.Replace("[[", "\"").Replace("]]", "\"");
 
             context.Query = sql;
         }

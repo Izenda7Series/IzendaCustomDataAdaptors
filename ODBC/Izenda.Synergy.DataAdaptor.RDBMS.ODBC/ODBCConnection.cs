@@ -61,14 +61,14 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
             return builder["uid"].ToString();
         }
 
-        public IDbConnection OpenConnection(string connectionString)
+        public virtual IDbConnection OpenConnection(string connectionString)
         {
             var connection = new OdbcConnection(connectionString);
             connection.Open();
             return connection;
         }
 
-        public ConnectionStatus TestConnection(Guid serverType, string connectionString)
+        public virtual ConnectionStatus TestConnection(Guid serverType, string connectionString)
         {
             var result = new ConnectionStatus
             {

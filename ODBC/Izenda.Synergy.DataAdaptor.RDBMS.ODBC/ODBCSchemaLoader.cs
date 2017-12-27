@@ -50,14 +50,145 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
     [DBServerTypeSupporting("88F5A470-9269-499B-A69C-70C94803FC3E", "ODBC", "[ODBC] ODBC")]
     public class ODBCSchemaLoader : ISchemaLoader
     {
-        public List<QuerySourceParameter> GetQuerySourceParameters(string connectionString)
+        public virtual DBSource LoadSchema(string connectionString)
+        {
+            using (var conn = new OdbcConnection(connectionString))
+            {
+                conn.Open();
+
+                var querySourceCategories = GetSchemas(conn);
+
+                foreach (var category in querySourceCategories)
+                {
+                    category.QuerySources = new List<QuerySource>();
+
+                    // Load Tables
+                    category.QuerySources.AddRange(GetTables(conn, category.Name));
+
+                    // Load Views
+                    category.QuerySources.AddRange(GetViews(conn, category.Name));
+
+                    // Load Procedures
+                    category.QuerySources.AddRange(GetProcedures(conn, category.Name));
+
+                    // Load Functions
+                    category.QuerySources.AddRange(GetFunctions(conn, category.Name));
+
+                    // Sort by name
+                    category.QuerySources = category.QuerySources.OrderBy(s => s.Name).ToList();
+                }
+
+                return new DBSource
+                {
+                    QuerySources = querySourceCategories.ToList()
+                };
+            }
+        }
+
+        public virtual List<QuerySourceField> LoadFields(string connectionString, string type, string categoryName, string querySourceName, bool rollbackSP, List<QuerySourceParameter> parameters = null, bool ignoreError = true, int commandTimeout = 500, BI.Logging.ILog log = null)
+        {
+            var result = new List<QuerySourceField>();
+
+            if (type.EqualsIgnoreCase(SQLQuerySourceType.Table) || type.EqualsIgnoreCase(SQLQuerySourceType.View))
+            {
+                result = LoadFieldsFromTable(connectionString, categoryName, querySourceName);
+            }
+            else if (type.EqualsIgnoreCase(SQLQuerySourceType.Procedure))
+            {
+                result = LoadFieldsFromProcedure(connectionString, type, categoryName, querySourceName, parameters, ignoreError, log);
+            }
+
+            return result;
+        }
+
+        public virtual List<QuerySourceField> LoadCustomQuerySourceFields(string connectionString, string customQueryDefinition)
+        {
+            var result = new List<QuerySourceField>();
+            var dataTypeAdaptor = new ODBCSupportDataType();
+
+            try
+            {
+                //using (var transaction = new TransactionScope(TransactionScopeOption.RequiresNew))//UNDONE: workaround ODBC transaction issue
+                //{
+                using (var conn = new OdbcConnection(connectionString))
+                {
+                    conn.Open();
+
+                    var command = new OdbcCommand(customQueryDefinition, conn);
+                    command.CommandType = CommandType.Text;
+                    var reader = command.ExecuteReader(CommandBehavior.SchemaOnly);
+                    var schema = reader.GetSchemaTable();
+
+                    for (int i = 0; i < schema.Rows.Count; i++)
+                    {
+                        string dataType = reader.GetDataTypeName(i);
+
+                        result.Add(
+                            new QuerySourceField
+                            {
+                                Name = schema.Rows[i]["ColumnName"].ToString() ?? "",
+                                DataType = dataType,
+                                IzendaDataType = dataTypeAdaptor.GetIzendaDataType(dataType),
+                                AllowDistinct = dataTypeAdaptor.GetAllowDistinct(dataType),
+                                ExtendedProperties = "",
+                                Position = Convert.ToInt32(schema.Rows[0]["ColumnOrdinal"].ToString())
+                            }
+                        );
+                    }
+                }
+                //}
+            }
+            catch (OdbcException ex)
+            {
+                var errorMsgBuilder = new StringBuilder();
+                var modelErrors = new ModelErrors();
+                for (int i = 0; i < ex.Errors.Count; i++)
+                {
+                    var error = ex.Errors[i];
+                    errorMsgBuilder.AppendLine(error.Message);
+                }
+
+                modelErrors.AddError("CustomDefinition", errorMsgBuilder.ToString());
+                throw new IzendaModelException(modelErrors);
+            }
+
+            return result;
+        }
+
+        public virtual List<QuerySourceField> LoadQuerySourceFields(string connectionString)
+        {
+            return LoadFieldsFromTable(connectionString);
+        }
+
+        public virtual List<Relationship> LoadRelationships(string connectionString, List<string> schemas = null)
+        {
+            return new List<Relationship>();//UNDONE: load relationships of database
+            //using (var conn = new OdbcConnection(connectionString))
+            //{
+            //    string sql = $@"SELECT CONSTNAME, TABSCHEMA, TABNAME, FK_COLNAMES, REFTABSCHEMA, REFTABNAME, PK_COLNAMES FROM SYSCAT.REFERENCES;";
+
+            //    var relationships = conn.Query<dynamic>(sql)
+            //                                  .Select(r => new Relationship
+            //                                  {
+            //                                      JoinQuerySourceName = r.TABSCHEMA + '.' + r.TABNAME,
+            //                                      ForeignQuerySourceName = r.REFTABSCHEMA + '.' + r.REFTABNAME,
+            //                                      JoinFieldName = r.FK_COLNAMES,
+            //                                      ForeignFieldName = r.PK_COLNAMES
+            //                                  })
+            //                                  .ToList();
+
+            //    return relationships;
+            //}
+        }
+
+        public virtual List<QuerySourceParameter> GetQuerySourceParameters(string connectionString)
         {
             return GetQuerySourceParameters(connectionString, string.Empty, string.Empty);
         }
 
-        public List<QuerySourceParameter> GetQuerySourceParameters(string connectionString, string specificSchema, string specificName)
+        public virtual List<QuerySourceParameter> GetQuerySourceParameters(string connectionString, string specificSchema, string specificName)
         {
-            var dataTypes = new SnowflakeSupportDataType();//TODO: ODBC supported data type
+            var dataTypes = new ODBCSupportDataType();
 
             using (var conn = new OdbcConnection(connectionString))
             {
@@ -105,85 +236,10 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
             }
         }
 
-        public List<QuerySourceField> LoadCustomQuerySourceFields(string connectionString, string customQueryDefinition)
-        {
-            var result = new List<QuerySourceField>();
-            var dataTypeAdaptor = new SnowflakeSupportDataType();//TODO: ODBC Supported Data Type
-
-            try
-            {
-                //using (var transaction = new TransactionScope(TransactionScopeOption.RequiresNew))//UNDONE: workaround ODBC transaction issue
-                //{
-                    using (var conn = new OdbcConnection(connectionString))
-                    {
-                        conn.Open();
-
-                        var command = new OdbcCommand(customQueryDefinition, conn);
-                        command.CommandType = CommandType.Text;
-                        var reader = command.ExecuteReader(CommandBehavior.SchemaOnly);
-                        var schema = reader.GetSchemaTable();
-
-                        for (int i = 0; i < schema.Rows.Count; i++)
-                        {
-                            string dataType = reader.GetDataTypeName(i);
-
-                            result.Add(
-                                new QuerySourceField
-                                {
-                                    Name = schema.Rows[i]["ColumnName"].ToString() ?? "",
-                                    DataType = dataType,
-                                    IzendaDataType = dataTypeAdaptor.GetIzendaDataType(dataType),
-                                    AllowDistinct = dataTypeAdaptor.GetAllowDistinct(dataType),
-                                    ExtendedProperties = "",
-                                    Position = Convert.ToInt32(schema.Rows[0]["ColumnOrdinal"].ToString())
-                                }
-                            );
-                        }
-                    }
-                //}
-            }
-            catch (OdbcException ex)
-            {
-                var errorMsgBuilder = new StringBuilder();
-                var modelErrors = new ModelErrors();
-                for (int i = 0; i < ex.Errors.Count; i++)
-                {
-                    var error = ex.Errors[i];
-                    errorMsgBuilder.AppendLine(error.Message);
-                }
-
-                modelErrors.AddError("CustomDefinition", errorMsgBuilder.ToString());
-                throw new IzendaModelException(modelErrors);
-            }
-
-            return result;
-        }
-
-        public List<QuerySourceField> LoadFields(string connectionString, string type, string categoryName, string querySourceName, bool rollbackSP, List<QuerySourceParameter> parameters = null, bool ignoreError = true, int commandTimeout = 500, BI.Logging.ILog log = null)
-        {
-            var result = new List<QuerySourceField>();
-
-            if (type.EqualsIgnoreCase(SQLQuerySourceType.Table) || type.EqualsIgnoreCase(SQLQuerySourceType.View))
-            {
-                result = LoadFieldsFromTable(connectionString, categoryName, querySourceName);
-            }
-            else if (type.EqualsIgnoreCase(SQLQuerySourceType.Procedure))
-            {
-                result = LoadFieldsFromProcedure(connectionString, type, categoryName, querySourceName, parameters, ignoreError, log);
-            }
-
-            return result;
-        }
-
-        public List<QuerySourceField> LoadQuerySourceFields(string connectionString)
-        {
-            return LoadFieldsFromTable(connectionString);
-        }
-
         private List<QuerySourceField> LoadFieldsFromTable(string connectionString, string schemaName = null, string tableName = null)
         {
             var result = new List<QuerySourceField>();
-            var dataTypeAdaptor = new SnowflakeSupportDataType();//TODO: ODBC supported data type for other DB type
+            var dataTypeAdaptor = new ODBCSupportDataType();
 
             using (var conn = new OdbcConnection(connectionString))
             {
@@ -329,62 +385,6 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
             //}
         }
 
-        public List<Relationship> LoadRelationships(string connectionString, List<string> schemas = null)
-        {
-            return new List<Relationship>();//UNDONE: load relationships of database
-            //using (var conn = new OdbcConnection(connectionString))
-            //{
-            //    string sql = $@"SELECT CONSTNAME, TABSCHEMA, TABNAME, FK_COLNAMES, REFTABSCHEMA, REFTABNAME, PK_COLNAMES FROM SYSCAT.REFERENCES;";
-
-            //    var relationships = conn.Query<dynamic>(sql)
-            //                                  .Select(r => new Relationship
-            //                                  {
-            //                                      JoinQuerySourceName = r.TABSCHEMA + '.' + r.TABNAME,
-            //                                      ForeignQuerySourceName = r.REFTABSCHEMA + '.' + r.REFTABNAME,
-            //                                      JoinFieldName = r.FK_COLNAMES,
-            //                                      ForeignFieldName = r.PK_COLNAMES
-            //                                  })
-            //                                  .ToList();
-
-            //    return relationships;
-            //}
-        }
-
-        public DBSource LoadSchema(string connectionString)
-        {
-            using (var conn = new OdbcConnection(connectionString))
-            {
-                conn.Open();
-
-                var querySourceCategories = GetSchemas(conn);
-
-                foreach (var category in querySourceCategories)
-                {
-                    category.QuerySources = new List<QuerySource>();
-
-                    // Load Tables
-                    category.QuerySources.AddRange(GetTables(conn, category.Name));
-
-                    // Load Views
-                    category.QuerySources.AddRange(GetViews(conn, category.Name));
-
-                    // Load Procedures
-                    category.QuerySources.AddRange(GetProcedures(conn, category.Name));
-
-                    // Load Functions
-                    category.QuerySources.AddRange(GetFunctions(conn, category.Name));
-
-                    // Sort by name
-                    category.QuerySources = category.QuerySources.OrderBy(s => s.Name).ToList();
-                }
-
-                return new DBSource
-                {
-                    QuerySources = querySourceCategories.ToList()
-                };
-            }
-        }
-
         protected IList<QuerySourceCategory> GetSchemas(OdbcConnection connection)
         {
             var querySourceCategories = new List<QuerySourceCategory>();
@@ -490,6 +490,5 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
             return GetQuerySources(tables, SQLQuerySourceType.Function, "PROCEDURE_NAME");
         }
-
     }
 }

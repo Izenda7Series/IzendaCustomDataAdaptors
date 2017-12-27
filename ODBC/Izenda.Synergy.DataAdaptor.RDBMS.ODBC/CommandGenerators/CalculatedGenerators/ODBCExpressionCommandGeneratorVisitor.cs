@@ -129,17 +129,6 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         }
 
         /// <summary>
-        /// Gets the is null token command generator.
-        /// </summary>        
-        public override IsNullTokenCommandGenerator IsNullTokenCommandGenerator
-        {
-            get
-            {
-                return new ODBCIsNullTokenCommandGenerator(this);
-            }
-        }
-
-        /// <summary>
         /// Gets the length token command generator.
         /// </summary>       
         public override LenTokenCommandGenerator LenTokenCommandGenerator
@@ -147,6 +136,18 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
             get
             {
                 return new ODBCLenTokenCommandGenerator(this);
+            }
+        }
+
+        public override ValueTokenCommandGenerator ValueTokenCommandGenerator
+        {
+            get
+            {
+                var valueTokenCommandGenerator = new ODBCValueTokenCommandGenerator(this)
+                {
+                    Parameters = this.Parameters
+                };
+                return valueTokenCommandGenerator;
             }
         }
     }

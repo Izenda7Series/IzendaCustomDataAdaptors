@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCReplaceConcatFunctionActivity.cs" company="Izenda">
+// <copyright file="ODBCBooleanFilterGenerator.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,41 +29,15 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
+using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators;
 
-using Izenda.BI.Framework.Models.Contexts;
-using Izenda.BI.QueryNormalizer.ODBC;
-using Izenda.BI.QueryNormalizer.Utility;
-using System;
-using System.Text;
-
-namespace Izenda.BI.QueryNormalizer.SQL
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators
 {
     /// <summary>
-    /// Replace @ to :
+    /// Generate boolean filter.
     /// </summary>
-    public class ODBCReplaceConcatFunctionActivity: ODBCQueryNormalizerActivity
+    public class ODBCBooleanFilterGenerator : BooleanFilterGenerator
     {
-        /// <summary>
-        /// The activity order
-        /// </summary>
-        public override int Order
-        {
-            get
-            {
-                return 10;
-            }
-        }
-
-        /// <summary>
-        /// Execute the activity
-        /// </summary>
-        /// <param name="context">The context</param>
-        public override void Execute(QueryNormalizerContext context)
-        {
-            const string izendaConcat = "IZENDA_CONCAT";
-            const string odbcConcat = "CONCAT";
-
-            context.Query = context.Query.Replace(izendaConcat, odbcConcat);
-        }
+        //This is intended for reflection purpose such as load correct DatabaseFunctionFormat
     }
 }

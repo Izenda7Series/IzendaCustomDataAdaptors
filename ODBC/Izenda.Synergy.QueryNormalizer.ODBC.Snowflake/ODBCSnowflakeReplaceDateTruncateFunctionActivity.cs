@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCInsertEscapePipeActivity.cs" company="Izenda">
+// <copyright file="ODBCSnowflakeReplaceDateTruncateFunctionActivity.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -29,16 +29,16 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
+
 using Izenda.BI.Framework.Models.Contexts;
-using Izenda.BI.QueryNormalizer.Utility;
+using System;
 
 namespace Izenda.BI.QueryNormalizer.ODBC
 {
     /// <summary>
-    /// ODBCInsertEscapePipeActivity
+    /// Replace date truncate function
     /// </summary>
-    /// <seealso cref="Izenda.BI.QueryNormalizer.ODBC.ODBCQueryNormalizerActivity" />
-    public class ODBCInsertEscapePipeActivity : ODBCQueryNormalizerActivity
+    public class ODBCSnowflakeReplaceDateTruncateFunctionActivity : ODBCSnowflakeQueryNormalizerActivity
     {
         /// <summary>
         /// The activity order
@@ -47,7 +47,7 @@ namespace Izenda.BI.QueryNormalizer.ODBC
         {
             get
             {
-                return 20;
+                return 12;
             }
         }
 
@@ -57,9 +57,26 @@ namespace Izenda.BI.QueryNormalizer.ODBC
         /// <param name="context">The context</param>
         public override void Execute(QueryNormalizerContext context)
         {
-            context.Query = InsertEscapePipeUtils.InsertEscapePipe(context.Query);
-            context.Query = InsertEscapePipeUtils.InsertEscapePipeWithLowerFunction(context.Query);
-        }
+            var sql = context.Query;
+            int index = -1;
+            var dateTruncate = "DATETRUNCATE";
 
+            index = sql.IndexOf(dateTruncate, StringComparison.OrdinalIgnoreCase);
+
+            while (index >= 0)
+            {
+                var openIndex = sql.IndexOf("(", index);
+                var closeIndex = sql.IndexOf(")", index);
+                var fieldName = sql.Substring(openIndex + 1, closeIndex - 1 - openIndex);
+                var replacedContent = string.Format("DATE_TRUNC({0})", fieldName);
+                var originalContent = sql.Substring(index, closeIndex - index + 1);
+
+                sql = sql.Replace(originalContent, replacedContent);
+
+                index = sql.IndexOf(dateTruncate, StringComparison.OrdinalIgnoreCase);
+            }
+
+            context.Query = sql;
+        }
     }
 }

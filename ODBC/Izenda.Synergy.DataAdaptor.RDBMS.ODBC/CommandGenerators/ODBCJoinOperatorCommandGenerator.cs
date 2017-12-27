@@ -33,7 +33,7 @@ using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
-    internal class ODBCJoinOperatorCommandGenerator : JoinOperatorCommandGenerator
+    public class ODBCJoinOperatorCommandGenerator : JoinOperatorCommandGenerator
     {
         public ODBCJoinOperatorCommandGenerator(QueryTreeCommandGeneratorVisitor visitor) : base(visitor)
         {

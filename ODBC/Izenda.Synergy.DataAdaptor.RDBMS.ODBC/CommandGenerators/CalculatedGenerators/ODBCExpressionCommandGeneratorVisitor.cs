@@ -150,5 +150,17 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
                 return valueTokenCommandGenerator;
             }
         }
+
+        /// <summary>
+        /// Gets the length token command generator.
+        /// </summary>
+        public override LpadTokenCommandGenerator LpadTokenCommandGenerator
+        {
+            get
+            {
+                return new ODBCLpadTokenCommandGenerator(this);
+            }
+        }
+
     }
 }

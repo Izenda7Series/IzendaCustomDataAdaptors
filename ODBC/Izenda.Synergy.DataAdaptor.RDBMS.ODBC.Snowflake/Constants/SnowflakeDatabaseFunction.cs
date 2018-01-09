@@ -31,7 +31,7 @@
 
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.Constants
 {
     /// <summary>
     /// SnowflakeDatabaseFunction

@@ -32,7 +32,7 @@
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
 using Izenda.BI.Framework.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.Constants
 {
     /// <summary>
     /// The oracle data type model

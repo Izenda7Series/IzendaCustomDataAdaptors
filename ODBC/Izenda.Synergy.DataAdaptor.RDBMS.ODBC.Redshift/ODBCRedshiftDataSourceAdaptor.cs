@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="OracleConnection.cs" company="Izenda">
+// <copyright file="ODBCRedshiftDataSourceAdaptor.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -31,17 +31,18 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using Izenda.BI.Framework.Models;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.Constants;
 using Izenda.BI.Framework.Components.SequenceWorkflows;
 using Izenda.BI.Framework.Models.Contexts;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.Synergy.DataAdaptor.RDBMS.ODBC;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.CommandGenerators;
 using Izenda.BI.QueryNormalizer.ODBC.Redshift;
 using Izenda.BI.Framework.Constants;
 using System;
+using Izenda.BI.DataAdaptor.SQL.SchemaLoader;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift
 {
     [Export(typeof(IDataSourceAdaptor))]
     [ExportMetadata("ServerType", "751A82D4-6B28-406E-AE8E-88035E72D0A8|ODBC Redshift|[ODBC] Redshift")]
@@ -55,9 +56,11 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift
         {
             get
             {
-                return true;
+                return false;
             }
         }
+
+        public override ISchemaLoader SchemaLoader => new ODBCRedshiftSchemaLoader();
 
         /// <summary>
         /// The query normalizer

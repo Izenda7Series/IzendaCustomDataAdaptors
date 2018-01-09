@@ -30,16 +30,14 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using System;
-using System.Collections.Generic;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.Constants
 {
     /// <summary>
     /// The select command field format
     /// </summary>
     public class RedshiftSelectFieldCommandFormat : SelectFieldCommandFormat
     {
-        //TODO: re-check
+        //TODO: re-check select field command format
     }
 }

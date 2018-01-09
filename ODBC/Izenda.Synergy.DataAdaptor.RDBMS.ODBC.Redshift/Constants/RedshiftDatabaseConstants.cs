@@ -33,10 +33,8 @@ using Izenda.BI.DataAdaptor.RDBMS.Constants;
 using Izenda.BI.Framework.Constants;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.Constants
 {
     /// <summary>
     /// RedshiftDatabaseConstants

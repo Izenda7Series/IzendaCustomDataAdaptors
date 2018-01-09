@@ -31,10 +31,9 @@
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.CommandGenerators
 {
     /// <summary>
     /// ODBCConvertTokenCommandGenerator

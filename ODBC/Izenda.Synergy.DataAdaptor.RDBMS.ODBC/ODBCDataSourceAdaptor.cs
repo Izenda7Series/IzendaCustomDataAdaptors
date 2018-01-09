@@ -33,14 +33,9 @@ using System;
 using System.Collections.Generic;
 using Izenda.BI.DataAdaptor.SQL.SchemaLoader;
 using Izenda.BI.Framework;
-using System.ComponentModel.Composition;
-using Izenda.BI.DataAdaptor;
 using Izenda.BI.Framework.Constants;
 using Izenda.BI.Framework.Models;
 using Dapper;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
-using Izenda.BI.Framework.Components.SequenceWorkflows;
-using Izenda.BI.Framework.Models.Contexts;
 using Izenda.BI.Framework.Exceptions;
 using Izenda.BI.Resource;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
@@ -75,14 +70,13 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
         {
             get
             {
-                throw new NotSupportedException("Get first value query has to override for each specific RDBMS");
+                throw new NotImplementedException("Get first value query has to override for each specific RDBMS");
             }
         }
 
         public override List<DatabaseDataType> GetBaseDataTypes()
         {
-            var dataTypeAdaptor = new ODBCSupportDataType();
-            return dataTypeAdaptor.GetBaseDataTypes();
+            throw new NotImplementedException("Have to override this method for each specific RDBMS");
         }
 
         public override string GetConnectionStringWithServerAndDatabaseName(string connectionString)

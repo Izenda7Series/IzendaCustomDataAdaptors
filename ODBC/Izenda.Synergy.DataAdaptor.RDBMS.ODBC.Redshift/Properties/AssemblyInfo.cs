@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift")]
+[assembly: AssemblyTitle("Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift")]
+[assembly: AssemblyProduct("Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

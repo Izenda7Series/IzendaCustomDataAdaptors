@@ -29,9 +29,9 @@
 // </copyright> 
 // ----------------------------------------------------------------------  				
 
+using System;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
@@ -44,7 +44,13 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         /// <summary>
         /// Gets the type of the database support data.
         /// </summary>
-        public override DatabaseSupportDataType DatabaseSupportDataType => new ODBCSupportDataType();
+        public override DatabaseSupportDataType DatabaseSupportDataType
+        {
+            get
+            {
+                throw new NotImplementedException("Have to provide specific supported data type for RDBMS");
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ODBCCastTokenCommandGenerator"/> class.

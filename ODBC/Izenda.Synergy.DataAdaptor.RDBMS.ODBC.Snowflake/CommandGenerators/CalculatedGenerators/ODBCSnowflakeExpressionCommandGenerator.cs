@@ -30,8 +30,9 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.CommandGenerators
 {
     /// <summary>
     /// OracleExpressionCommandGenerator

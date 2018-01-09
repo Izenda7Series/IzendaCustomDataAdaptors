@@ -48,6 +48,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\libs\Dapper\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
       <HintPath>..\libs\Izenda\Izenda.BI.DataAdaptor.RDBMS.dll</HintPath>
     </Reference>
@@ -93,6 +96,7 @@
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeConvertTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeExpressionCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeExpressionCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\ConvertNullToEmptyGenerator\ODBCSnowflakeNullToEmptyConvertor.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarMonth.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarQuarter.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarWeek.cs" />
@@ -102,31 +106,37 @@
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCFiscalYear.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCLongTermPeriod.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCSecond.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCEquivalenceFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCFilterCommandGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCBlankFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCBooleanFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCComparisonFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCDateTimeFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCFieldComparisonFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCNotBlankFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCNotNullFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCNullFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCStringFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\FilterGenerators\ODBCThreeDotsFilterGenerator.cs" />
-    <Compile Include="CommandGenerators\Formatter\ODBCNameFormatter.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeBlankFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeBooleanFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeComparisonFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeDateTimeFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeEquivalenceFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeFieldComparisonFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeFilterCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeNotBlankFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeNotNullFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeNullFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeStringFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCSnowflakeThreeDotsFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeConvertNullToEmptyOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeGroupingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeJoinOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeOperandCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakePagingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeProjectionOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSnowflakeQueryTreeCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSnowflakeQueryTreeCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeResultLimitOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeSelectFieldCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCSnowflakeSelectionOperatorCommandGenerator.cs" />
     <Compile Include="Constants\SnowflakeSelectFieldCommandFormat.cs" />
     <Compile Include="Constants\SnowflakeDatabaseFunctionFormat.cs" />
     <Compile Include="Constants\SnowflakeDatabaseConstants.cs" />
     <Compile Include="Constants\SnowflakeDatabaseFunction.cs" />
     <Compile Include="Constants\SnowflakeSupportDataType.cs" />
+    <Compile Include="ODBCSnowflakeSchemaLoader.cs" />
     <Compile Include="ODBCSnowflakeDataSourceAdaptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CommandGenerators\ConvertNullToEmptyGenerator\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Izenda.Synergy.DataAdaptor.RDBMS.ODBC\Izenda.Synergy.DataAdaptor.RDBMS.ODBC.csproj">

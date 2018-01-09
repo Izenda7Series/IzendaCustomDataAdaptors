@@ -29,9 +29,9 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
+using System;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
 {
@@ -56,7 +56,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.MyODBC.CommandGenerators
         {
             get
             {
-                return new ODBCSupportDataType();
+                throw new NotImplementedException("Have to provide specific supported data type for RDBMS");
             }
         }        
     }

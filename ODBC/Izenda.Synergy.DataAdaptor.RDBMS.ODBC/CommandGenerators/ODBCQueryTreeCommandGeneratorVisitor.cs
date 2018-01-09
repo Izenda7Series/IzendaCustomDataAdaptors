@@ -105,28 +105,6 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
             }
         }
 
-        ///// <summary>
-        ///// Gets the sorting command generator.
-        ///// </summary>
-        //public override SortingOperatorCommandGenerator SortingOperatorCommandGenerator
-        //{
-        //    get
-        //    {
-        //        return new ODBCSortingOperatorCommandGenerator(this);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Gets the sorting command generator.
-        ///// </summary>
-        //public override SubTotalOperatorCommandGenerator SubTotalOperatorCommandGenerator
-        //{
-        //    get
-        //    {
-        //        return new ODBCSubTotalOperatorCommandGenerator(this);
-        //    }
-        //}
-
         /// <summary>
         /// Gets the result limit command generator.
         /// </summary>
@@ -138,15 +116,15 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
             }
         }
 
-        ///// <summary>
-        ///// Gets the distinct command generator.
-        ///// </summary>
-        //public override DistinctOperatorCommandGenerator DistinctOperatorCommandGenerator
-        //{
-        //    get
-        //    {
-        //        return new ODBCDistinctOperatorCommandGenerator(this);
-        //    }
-        //}
+        /// <summary>
+        /// Gets the convert null to empty command generator.
+        /// </summary>
+        public override ConvertNullToEmptyOperatorCommandGenerator ConvertNullToEmptyOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCConvertNullToEmptyOperatorCommandGenerator(this);
+            }
+        }
     }
 }

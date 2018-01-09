@@ -48,7 +48,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
+    <Reference Include="Dapper">
+      <HintPath>..\libs\Dapper\Dapper.dll</HintPath>
+    </Reference>
+     <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
       <HintPath>..\libs\Izenda\Izenda.BI.DataAdaptor.RDBMS.dll</HintPath>
     </Reference>
     <Reference Include="Izenda.BI.DataSourceAdapter">
@@ -91,14 +94,46 @@
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftDatePartTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftExpressionCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftExpressionCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\ConvertNullToEmptyGenerator\ODBCRedshiftNullToEmptyConvertor.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarMonth.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarQuarter.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarWeek.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarYear.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCDay.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCFiscalQuarter.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCFiscalYear.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCLongTermPeriod.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCSecond.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftBlankFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftBooleanFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftComparisonFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftDateTimeFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftEquivalenceFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftFieldComparisonFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftFilterCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftNotBlankFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftNotNullFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftNullFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftStringFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\ODBCRedshiftThreeDotsFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftConvertNullToEmptyOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftGroupingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftJoinOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftOperandCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftPagingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftProjectionOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCRedshiftQueryTreeCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCRedshiftQueryTreeCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftResultLimitOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftSelectFieldCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ODBCRedshiftSelectionOperatorCommandGenerator.cs" />
     <Compile Include="Constants\RedshiftSupportDataType.cs" />
     <Compile Include="Constants\RedshiftSelectFieldCommandFormat.cs" />
     <Compile Include="Constants\RedshiftDatabaseFunctionFormat.cs" />
     <Compile Include="Constants\RedshiftDatabaseConstants.cs" />
     <Compile Include="Constants\RedshiftDatabaseFunction.cs" />
     <Compile Include="ODBCRedshiftDataSourceAdaptor.cs" />
+    <Compile Include="ODBCRedshiftSchemaLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

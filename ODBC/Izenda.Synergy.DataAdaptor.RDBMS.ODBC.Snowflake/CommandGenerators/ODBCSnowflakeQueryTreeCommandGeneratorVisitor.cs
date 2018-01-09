@@ -30,15 +30,102 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.CommandGenerators
 {
     /// <summary>
-    /// ODBCQueryTreeCommandGeneratorVisitor
+    /// ODBCSnowflakeQueryTreeCommandGeneratorVisitor
     /// </summary>
     /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.QueryTreeCommandGeneratorVisitor" />
     public class ODBCSnowflakeQueryTreeCommandGeneratorVisitor : ODBCQueryTreeCommandGeneratorVisitor
     {
-        
+        /// <summary>
+        /// Gets the paging operator command generator.
+        /// </summary>
+        public override PagingOperatorCommandGenerator PagingOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakePagingOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the operand command generator.
+        /// </summary>
+        public override OperandCommandGenerator OperandCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeOperandCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Get the join operator command generator
+        /// </summary>
+        public override JoinOperatorCommandGenerator JoinOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeJoinOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the projection command generator.
+        /// </summary>
+        public override ProjectionOperatorCommandGenerator ProjectionOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeProjectionOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the selection command generator.
+        /// </summary>
+        public override SelectionOperatorCommandGenerator SelectionOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeSelectionOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the grouping command generator.
+        /// </summary>
+        public override GroupingOperatorCommandGenerator GroupingOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeGroupingOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the result limit command generator.
+        /// </summary>
+        public override ResultLimitOperatorCommandGenerator ResultLimitOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeResultLimitOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the convert null to empty command generator.
+        /// </summary>
+        public override ConvertNullToEmptyOperatorCommandGenerator ConvertNullToEmptyOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCSnowflakeConvertNullToEmptyOperatorCommandGenerator(this);
+            }
+        }
     }
 }

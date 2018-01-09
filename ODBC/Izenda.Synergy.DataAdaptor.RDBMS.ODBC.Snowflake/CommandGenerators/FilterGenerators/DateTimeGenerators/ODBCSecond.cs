@@ -30,10 +30,6 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.FilterGenerators.DateTimeGenerators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators.FilterGenerators.DateTimeGenerators
 {

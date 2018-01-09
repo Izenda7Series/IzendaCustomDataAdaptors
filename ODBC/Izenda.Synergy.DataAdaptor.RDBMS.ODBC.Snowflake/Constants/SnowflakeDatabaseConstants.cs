@@ -36,7 +36,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.Constants
 {
     /// <summary>
     /// SnowflakeDatabaseConstants

@@ -1,5 +1,5 @@
 ﻿// ---------------------------------------------------------------------- 
-// <copyright file="ODBCQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
+// <copyright file="ODBCRedshiftQueryTreeCommandGeneratorVisitor.cs" company="Izenda">
 //  Copyright (c) 2015 Izenda, Inc.                          
 //  ALL RIGHTS RESERVED                
 //                                                                         
@@ -30,15 +30,102 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.CommandGenerators
 {
     /// <summary>
-    /// ODBCQueryTreeCommandGeneratorVisitor
+    /// ODBCRedshiftQueryTreeCommandGeneratorVisitor
     /// </summary>
     /// <seealso cref="Izenda.BI.DataAdaptor.RDBMS.CommandGenerators.QueryTreeCommandGeneratorVisitor" />
     public class ODBCRedshiftQueryTreeCommandGeneratorVisitor : ODBCQueryTreeCommandGeneratorVisitor
     {
-        
+        /// <summary>
+        /// Gets the paging operator command generator.
+        /// </summary>
+        public override PagingOperatorCommandGenerator PagingOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftPagingOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the operand command generator.
+        /// </summary>
+        public override OperandCommandGenerator OperandCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftOperandCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Get the join operator command generator
+        /// </summary>
+        public override JoinOperatorCommandGenerator JoinOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftJoinOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the projection command generator.
+        /// </summary>
+        public override ProjectionOperatorCommandGenerator ProjectionOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftProjectionOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the selection command generator.
+        /// </summary>
+        public override SelectionOperatorCommandGenerator SelectionOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftSelectionOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the grouping command generator.
+        /// </summary>
+        public override GroupingOperatorCommandGenerator GroupingOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftGroupingOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the result limit command generator.
+        /// </summary>
+        public override ResultLimitOperatorCommandGenerator ResultLimitOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftResultLimitOperatorCommandGenerator(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets the convert null to empty command generator.
+        /// </summary>
+        public override ConvertNullToEmptyOperatorCommandGenerator ConvertNullToEmptyOperatorCommandGenerator
+        {
+            get
+            {
+                return new ODBCRedshiftConvertNullToEmptyOperatorCommandGenerator(this);
+            }
+        }
     }
 }

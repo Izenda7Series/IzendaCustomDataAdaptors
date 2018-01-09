@@ -30,10 +30,8 @@
 // ----------------------------------------------------------------------
 
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using System;
-using System.Collections.Generic;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.Constants
 {
     /// <summary>
     /// The select command field format

@@ -99,6 +99,8 @@
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCExpressionCommandGeneratorVisitor.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSumTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCValueTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCLpadTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\ConvertNullToEmptyGenerator\ODBCNullToEmptyConvertor.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarMonth.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarQuarter.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarWeek.cs" />
@@ -131,9 +133,7 @@
     <Compile Include="CommandGenerators\ODBCResultLimitOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectionOperatorCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ODBCSelectFieldCommandGenerator.cs" />
-    <Compile Include="Constants\ODBCDatabaseConstants.cs" />
-    <Compile Include="Constants\ODBCDatabaseFunction.cs" />
-    <Compile Include="Constants\ODBCSupportDataType.cs" />
+    <Compile Include="CommandGenerators\ODBCConvertNullToEmptyOperatorCommandGenerator.cs" />
     <Compile Include="ODBCConnection.cs" />
     <Compile Include="ODBCDataSourceAdaptor.cs" />
     <Compile Include="ODBCSchemaLoader.cs" />
@@ -141,6 +141,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommandGenerators\ConvertNullToEmptyGenerator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Constants\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

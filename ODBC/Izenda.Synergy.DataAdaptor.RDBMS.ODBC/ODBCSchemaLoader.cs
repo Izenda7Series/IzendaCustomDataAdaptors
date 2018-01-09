@@ -35,21 +35,28 @@ using System.Linq;
 using System.Text;
 using Izenda.BI.Framework.Models;
 using Izenda.BI.Framework.CustomAttributes;
-using Dapper;
 using Izenda.BI.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 using Izenda.BI.Framework.Utility;
 using System.Data;
-using System.Transactions;
-using Izenda.BI.Framework.Constants;
 using Izenda.BI.Framework.Exceptions;
 using System.Data.Odbc;
+using Izenda.BI.DataAdaptor.RDBMS.Constants;
+using System.Transactions;
+using Izenda.BI.Framework.Constants;
 
 namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 {
     [DBServerTypeSupporting("88F5A470-9269-499B-A69C-70C94803FC3E", "ODBC", "[ODBC] ODBC")]
     public class ODBCSchemaLoader : ISchemaLoader
     {
+        public virtual DatabaseSupportDataType DatabaseSupportDataType
+        {
+            get
+            {
+                throw new NotImplementedException("Have to provide overriding for DatabaseSupportDataType for specific RDBMS");
+            }
+        }
+
         public virtual DBSource LoadSchema(string connectionString)
         {
             using (var conn = new OdbcConnection(connectionString))
@@ -104,7 +111,6 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
         public virtual List<QuerySourceField> LoadCustomQuerySourceFields(string connectionString, string customQueryDefinition)
         {
             var result = new List<QuerySourceField>();
-            var dataTypeAdaptor = new ODBCSupportDataType();
 
             try
             {
@@ -128,8 +134,8 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                             {
                                 Name = schema.Rows[i]["ColumnName"].ToString() ?? "",
                                 DataType = dataType,
-                                IzendaDataType = dataTypeAdaptor.GetIzendaDataType(dataType),
-                                AllowDistinct = dataTypeAdaptor.GetAllowDistinct(dataType),
+                                IzendaDataType = DatabaseSupportDataType.GetIzendaDataType(dataType),
+                                AllowDistinct = DatabaseSupportDataType.GetAllowDistinct(dataType),
                                 ExtendedProperties = "",
                                 Position = Convert.ToInt32(schema.Rows[0]["ColumnOrdinal"].ToString())
                             }
@@ -162,23 +168,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
         public virtual List<Relationship> LoadRelationships(string connectionString, List<string> schemas = null)
         {
-            return new List<Relationship>();//UNDONE: load relationships of database
-            //using (var conn = new OdbcConnection(connectionString))
-            //{
-            //    string sql = $@"SELECT CONSTNAME, TABSCHEMA, TABNAME, FK_COLNAMES, REFTABSCHEMA, REFTABNAME, PK_COLNAMES FROM SYSCAT.REFERENCES;";
-
-            //    var relationships = conn.Query<dynamic>(sql)
-            //                                  .Select(r => new Relationship
-            //                                  {
-            //                                      JoinQuerySourceName = r.TABSCHEMA + '.' + r.TABNAME,
-            //                                      ForeignQuerySourceName = r.REFTABSCHEMA + '.' + r.REFTABNAME,
-            //                                      JoinFieldName = r.FK_COLNAMES,
-            //                                      ForeignFieldName = r.PK_COLNAMES
-            //                                  })
-            //                                  .ToList();
-
-            //    return relationships;
-            //}
+            throw new NotImplementedException("ODBC Connection does not have mechanism to load relationship. You have to override this method to provide relationship loading for specific RDBMS");
         }
 
         public virtual List<QuerySourceParameter> GetQuerySourceParameters(string connectionString)
@@ -188,10 +178,10 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
 
         public virtual List<QuerySourceParameter> GetQuerySourceParameters(string connectionString, string specificSchema, string specificName)
         {
-            var dataTypes = new ODBCSupportDataType();
-
             using (var conn = new OdbcConnection(connectionString))
             {
+                conn.Open();
+
                 // Build ODBC Schema Restriction for ProcedureParameters
                 var builder = new OdbcConnectionStringBuilder(conn.ConnectionString);
 
@@ -222,12 +212,12 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                         QuerySourceName = string.Empty + row["PROCEDURE_NAME"],
                         Category = string.Empty + row["PROCEDURE_SCHEM"],
                         DataType = string.Empty + row["TYPE_NAME"],
-                        IzendaDataType = dataTypes.GetIzendaDataType(string.Empty + row["TYPE_NAME"]),
+                        IzendaDataType = DatabaseSupportDataType.GetIzendaDataType(string.Empty + row["TYPE_NAME"]),
                         InputMode = coulumnType == 1 || coulumnType == 3,
                         Result = coulumnType == 4 || coulumnType == 5,
                         Position = possition,
                         Value = DBNull.Value,
-                        AllowDistinct = dataTypes.GetAllowDistinct(string.Empty + row["TYPE_NAME"])
+                        AllowDistinct = DatabaseSupportDataType.GetAllowDistinct(string.Empty + row["TYPE_NAME"])
                     };
                     querySourceParameters.Add(parameter);
                 }
@@ -236,10 +226,18 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
             }
         }
 
-        private List<QuerySourceField> LoadFieldsFromTable(string connectionString, string schemaName = null, string tableName = null)
+        /// <summary>
+        /// Load list of columns of table presents in <see cref="QuerySourceField"/> object. This method is called inside method <see cref="LoadFields(string, string, string, string, bool, List{QuerySourceParameter}, bool, int, BI.Logging.ILog)"/> in case the field type is <see cref="SQLQuerySourceType.Table"/>.
+        /// This method also is called inside method <see cref="LoadQuerySourceFields(string)"/>.
+        /// Override this method to customizes the way system loads table field as well as query source fields for ODBC connection.
+        /// </summary>
+        /// <param name="connectionString">The connection to database</param>
+        /// <param name="schemaName">The schama name</param>
+        /// <param name="tableName">The table name</param>
+        /// <returns>The list of query source field, each query source field presents for a column name of table.</returns>
+        protected virtual List<QuerySourceField> LoadFieldsFromTable(string connectionString, string schemaName = null, string tableName = null)
         {
             var result = new List<QuerySourceField>();
-            var dataTypeAdaptor = new ODBCSupportDataType();
 
             using (var conn = new OdbcConnection(connectionString))
             {
@@ -263,7 +261,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                 foreach (var row in columns.Rows.OfType<DataRow>())
                 {
                     var fieldDataType = string.Empty + row["TYPE_NAME"];
-                    var izendaDataType = dataTypeAdaptor.GetIzendaDataType(fieldDataType);
+                    var izendaDataType = DatabaseSupportDataType.GetIzendaDataType(fieldDataType);
 
                     if (string.IsNullOrEmpty(izendaDataType))
                     {
@@ -276,8 +274,8 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                             Name = row["COLUMN_NAME"].ToString(),
                             DataType = fieldDataType,
                             IzendaDataType = izendaDataType,
-                            AllowDistinct = dataTypeAdaptor.GetAllowDistinct(fieldDataType),
-                            //ExtendedProperties = string.IsNullOrEmpty("" + row["column_key"]) ? "" : new FieldExtendedProperty { PrimaryKey = true }.ToJson(),//TODO FieldExtendedProperty ?
+                            AllowDistinct = DatabaseSupportDataType.GetAllowDistinct(fieldDataType),
+                            //ExtendedProperties = string.IsNullOrEmpty("" + row["column_key"]) ? "" : new FieldExtendedProperty { PrimaryKey = true }.ToJson(),//TODO: FieldExtendedProperty ?
                             Position = Convert.ToInt32(row["ORDINAL_POSITION"]),
                             QuerySourceName = row["TABLE_NAME"].ToString(),
                             CategoryName = row["TABLE_SCHEM"].ToString()
@@ -289,100 +287,96 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
         }
 
         /// <summary>
-        /// Executes for schema.
+        /// Load columns definition of store proceudre.
+        /// This method is called inside <see cref="LoadFields(string, string, string, string, bool, List{QuerySourceParameter}, bool, int, BI.Logging.ILog)"/> in case field type is <see cref="SQLQuerySourceType.Procedure"/>
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
-        /// <param name="type">The type.</param>
+        /// <param name="type">The field type <see cref="SQLQuerySourceType"/>.</param>
         /// <param name="categoryName">Name of the schema.</param>
         /// <param name="querySourceName">Name of the specific.</param>
         /// <param name="parameters">The parameters.</param>
         /// <returns>
-        /// list of QuerySourceField
+        /// List of query source field which are columns list of resut set of procedure.
         /// </returns>
-        private List<QuerySourceField> LoadFieldsFromProcedure(string connectionString, string type, string categoryName, string querySourceName, List<QuerySourceParameter> parameters = null, bool ignoreError = true, BI.Logging.ILog log = null)
+        protected virtual List<QuerySourceField> LoadFieldsFromProcedure(string connectionString, string type, string categoryName, string querySourceName, List<QuerySourceParameter> parameters = null, bool ignoreError = true, BI.Logging.ILog log = null)
         {
-            return new List<QuerySourceField>();//UNDONE: load fields from procedures - Snowflake does not support procedure
-            //var result = new List<QuerySourceField>();
-            //var dataTypeAdaptor = new RedshiftSupportDataType();
+            var result = new List<QuerySourceField>();
 
-            //if (parameters == null)
-            //{
-            //    parameters = GetQuerySourceParameters(connectionString, categoryName, querySourceName);
-            //}
+            if (parameters == null)
+            {
+                parameters = GetQuerySourceParameters(connectionString, categoryName, querySourceName);
+            }
 
-            //parameters = parameters.OrderBy(x => x.Position).ToList();
+            parameters = parameters.OrderBy(x => x.Position).ToList();
 
-            //using (var transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
-            //{
-            //    using (var connection = new OdbcConnection(connectionString))
-            //    {
-            //        connection.Open();
-            //        string sql = String.Format("{0}.{1}", categoryName, querySourceName);
-            //        var cmd = new OdbcCommand(sql, connection);
-            //        if (type == SQLQuerySourceType.Procedure)
-            //        {
-            //            cmd.CommandType = CommandType.StoredProcedure;
-            //        }
+            using (var transaction = new TransactionScope(TransactionScopeOption.RequiresNew))
+            {
+                using (var connection = new OdbcConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = String.Format("{0}.{1}", categoryName, querySourceName);
+                    var cmd = new OdbcCommand(sql, connection);
+                    if (type == SQLQuerySourceType.Procedure)
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                    }
 
-            //        if (parameters != null && parameters.Count() > 0)
-            //        {
-            //            foreach (var parameter in parameters)
-            //            {
-            //                var ODBCParameter = cmd.Parameters.AddWithValue(parameter.Name, parameter.Value);
-            //            }
-            //        }
+                    if (parameters != null && parameters.Count() > 0)
+                    {
+                        foreach (var parameter in parameters)
+                        {
+                            var ODBCParameter = cmd.Parameters.AddWithValue(parameter.Name, parameter.Value);
+                        }
+                    }
 
-            //        try
-            //        {
+                    try
+                    {
 
-            //            var reader = cmd.ExecuteReader();
-            //            DataTable schema = reader.GetSchemaTable();
+                        var reader = cmd.ExecuteReader();
+                        DataTable schema = reader.GetSchemaTable();
 
-            //            if (schema != null)
-            //            {
-            //                var colNames = schema.Rows.OfType<DataRow>().FirstOrDefault().Table.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
-            //                var colStr = string.Join(", ", colNames.ToArray());
+                        if (schema != null)
+                        {
+                            result.AddRange(schema
+                                     .Rows
+                                     .OfType<DataRow>()
+                                     .Select
+                                     (
+                                        (c, i) => new QuerySourceField
+                                        {
+                                            Id = Guid.NewGuid(),
+                                            GroupPosition = 1,
+                                            Position = i,
+                                            Name = c["ColumnName"].ToString(),
+                                            DataType = reader.GetDataTypeName(int.Parse(c["ColumnOrdinal"].ToString())),
+                                            IzendaDataType = DatabaseSupportDataType.GetIzendaDataType(reader.GetDataTypeName(int.Parse(c["ColumnOrdinal"].ToString()))),
+                                            AllowDistinct = DatabaseSupportDataType.GetAllowDistinct(reader.GetDataTypeName(int.Parse(c["ColumnOrdinal"].ToString()))),
+                                            Type = (int)QuerySourceFieldType.Field
+                                        }
+                                     )
+                                     .Where(x => !string.IsNullOrEmpty(x.IzendaDataType)));
+                        }
 
-            //                result.AddRange(schema
-            //                         .Rows
-            //                         .OfType<DataRow>()
-            //                         .Select
-            //                         (
-            //                            (c, i) => new QuerySourceField
-            //                            {
-            //                                Id = Guid.NewGuid(),
-            //                                GroupPosition = 1,
-            //                                Position = i,
-            //                                Name = c["ColumnName"].ToString(),
-            //                                DataType = reader.GetDataTypeName(int.Parse(c["ColumnOrdinal"].ToString())),
-            //                                IzendaDataType = dataTypeAdaptor.GetIzendaDataType(reader.GetDataTypeName(int.Parse(c["ColumnOrdinal"].ToString()))),
-            //                                AllowDistinct = dataTypeAdaptor.GetAllowDistinct(reader.GetDataTypeName(int.Parse(c["ColumnOrdinal"].ToString()))),
-            //                                Type = (int)QuerySourceFieldType.Field
-            //                            }
-            //                         )
-            //                         .Where(x => !string.IsNullOrEmpty(x.IzendaDataType)));
-            //            }
+                        reader.Close();
 
-            //            reader.Close();
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        log?.Debug(ex);
 
-            //            return result;
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            log?.Debug(ex);
-
-            //            // ignore error when execute stored proc from customer connectionString
-            //            if (ignoreError)
-            //            {
-            //                return result;
-            //            }
-            //            else
-            //            {
-            //                throw;
-            //            }
-            //        }
-            //    }
-            //}
+                        // ignore error when execute stored proc from customer connectionString
+                        if (ignoreError)
+                        {
+                            return result;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+            }
         }
 
         protected IList<QuerySourceCategory> GetSchemas(OdbcConnection connection)

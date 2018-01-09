@@ -34,12 +34,15 @@ using Izenda.BI.Framework.Components.SequenceWorkflows;
 using Izenda.BI.Framework.Models.Contexts;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.QueryNormalizer.ODBC;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.Constants;
 using System.ComponentModel.Composition;
 using Izenda.BI.DataAdaptor;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.CommandGenerators;
+using Izenda.BI.DataAdaptor.SQL.SchemaLoader;
+using Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake;
+using Izenda.Synergy.DataAdaptor.RDBMS.ODBC;
 
-namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
+namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBCSnowflake
 {
     [Export(typeof(IDataSourceAdaptor))]
     [ExportMetadata("ServerType", "60168F4D-A810-47AB-8EFE-564EF928C1EE| ODBC Snowflake|[ODBC] Snowflake")]
@@ -56,6 +59,8 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
                 return false;
             }
         }
+
+        public override ISchemaLoader SchemaLoader => new ODBCSnowflakeSchemaLoader();
 
         /// <summary>
         /// The query normalizer

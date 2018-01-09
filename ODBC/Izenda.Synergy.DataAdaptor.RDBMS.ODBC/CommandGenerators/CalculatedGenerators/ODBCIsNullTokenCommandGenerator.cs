@@ -29,9 +29,9 @@
 // </copyright> 
 // ----------------------------------------------------------------------
 
+using System;
 using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
-using Izenda.BI.DataAdaptor.RDBMS.ODBC.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
 {
@@ -57,7 +57,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.CommandGenerators
         {
             get
             {
-                return new ODBCDatabaseFunction();
+                throw new NotImplementedException("Have to provide specific supported database functions for RDBMS");
             }
         }
     }

@@ -32,7 +32,7 @@
 
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.Constants
 {
     /// <summary>
     /// Database Function Format

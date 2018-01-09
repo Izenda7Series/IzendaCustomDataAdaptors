@@ -31,12 +31,8 @@
 
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
 using Izenda.BI.Framework.Constants;
-using Izenda.BI.Framework.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants
+namespace Izenda.BI.DataAdaptor.RDBMS.ODBCRedshift.Constants
 {
     /// <summary>
     /// The oracle data type model
@@ -46,7 +42,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.Constants
         /// <summary>
         /// Constructor
         /// </summary>
-        public void AddRedshiftSupportDataType()
+        public RedshiftSupportDataType()
         {
             // DateTime
             AddDatabaseDataType("DATE", IzendaDataType.DatetimeType, true, "System.DateTime");

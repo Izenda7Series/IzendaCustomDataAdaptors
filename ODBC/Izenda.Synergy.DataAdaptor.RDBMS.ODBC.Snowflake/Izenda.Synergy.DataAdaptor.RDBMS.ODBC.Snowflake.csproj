@@ -149,4 +149,14 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.DataAdaptor.RDBMS.ODBC.Snowflake.dll" "$(SolutionDir)\output\"
+XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.QueryNormalizer.ODBC.Snowflake.dll" "$(SolutionDir)\output\" 
+XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.DataAdaptor.RDBMS.dll" "$(SolutionDir)\output\" 
+XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.DataAdaptor.RDBMS.ODBC.dll" "$(SolutionDir)\output\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

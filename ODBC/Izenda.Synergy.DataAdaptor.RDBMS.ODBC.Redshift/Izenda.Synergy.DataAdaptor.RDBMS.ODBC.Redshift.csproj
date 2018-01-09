@@ -51,7 +51,7 @@
     <Reference Include="Dapper">
       <HintPath>..\libs\Dapper\Dapper.dll</HintPath>
     </Reference>
-     <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
+    <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
       <HintPath>..\libs\Izenda\Izenda.BI.DataAdaptor.RDBMS.dll</HintPath>
     </Reference>
     <Reference Include="Izenda.BI.DataSourceAdapter">
@@ -147,4 +147,14 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.DataAdaptor.RDBMS.ODBC.Redshift.dll" "$(SolutionDir)\output\"
+XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.QueryNormalizer.ODBC.Redshift.dll" "$(SolutionDir)\output\" 
+XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.DataAdaptor.RDBMS.dll" "$(SolutionDir)\output\" 
+XCOPY /S /I /Y "$(ProjectDir)bin\Izenda.BI.DataAdaptor.RDBMS.ODBC.dll" "$(SolutionDir)\output\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

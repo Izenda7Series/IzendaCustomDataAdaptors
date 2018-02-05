@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{67855F63-0D2A-4954-AA03-DD1F8FEDF84E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Izenda.BI.DataAdaptor.RDBMS.RedShift</RootNamespace>
+    <AssemblyName>Izenda.BI.DataAdaptor.RDBMS.RedShift</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\libs\Dapper\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.DataAdaptor.RDBMS">
+      <HintPath>..\libs\Izenda\Izenda.BI.DataAdaptor.RDBMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.DataSourceAdapter">
+      <HintPath>..\libs\Izenda\Izenda.BI.DataSourceAdapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Framework">
+      <HintPath>..\libs\Izenda\Izenda.BI.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Logging">
+      <HintPath>..\libs\Izenda\Izenda.BI.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.RDBMS">
+      <HintPath>..\libs\Izenda\Izenda.BI.RDBMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Izenda.BI.Resource">
+      <HintPath>..\libs\Izenda\Izenda.BI.Resource.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net40\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.2.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net40\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftCastTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftConvertTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftDatePartTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftExpressionCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftExpressionCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftIsNullTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftLpadTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\RedshiftMappingTokenCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftCalendarMonth.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftCalendarQuarter.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftCalendarWeek.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftCalendarYear.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftDay.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftFiscalQuarter.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftFiscalYear.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftLongTermPeriod.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerator\RedshiftSecond.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\RedshiftBlankFilterGenerator.cs" />
+    <Compile Include="CommandGenerators\FilterGenerators\RedshiftFilterCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftConvertNullToEmptyOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftGroupingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftJoinOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftOperandCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftPagingOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftProjectionOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedShiftQueryTreeCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedShiftQueryTreeCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\RedshiftResultLimitOperatorCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftSelectFieldCommandFormat.cs" />
+    <Compile Include="CommandGenerators\RedshiftSelectFieldCommandGenerator.cs" />
+    <Compile Include="CommandGenerators\RedshiftSelectionOperatorCommandGenerator.cs" />
+    <Compile Include="Constants\RedshiftDatabaseConstants.cs" />
+    <Compile Include="Constants\RedshiftDatabaseFunction.cs" />
+    <Compile Include="Constants\RedshiftDatabaseFunctionFormat.cs" />
+    <Compile Include="Constants\RedshiftSelectFieldCommandFormat.cs" />
+    <Compile Include="Constants\RedshiftSupportDataType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedShiftConnection.cs" />
+    <Compile Include="RedshiftDataSourceAdaptor.cs" />
+    <Compile Include="RedshiftSchemaLoader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Izenda.BI.QueryNormalizer.Redshift\Izenda.BI.QueryNormalizer.Redshift.csproj">
+      <Project>{e92f567e-e4e0-40d7-88b4-9e150f75a772}</Project>
+      <Name>Izenda.BI.QueryNormalizer.Redshift</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,5 +1,6 @@
 ﻿using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.Redshift.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.Redshift.CommandGenerators
 {

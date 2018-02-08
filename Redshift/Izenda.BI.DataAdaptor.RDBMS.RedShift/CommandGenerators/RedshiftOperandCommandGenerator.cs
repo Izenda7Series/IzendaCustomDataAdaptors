@@ -1,5 +1,7 @@
 ﻿using Izenda.BI.DataAdaptor.RDBMS.CommandGenerators;
 using Izenda.BI.DataAdaptor.RDBMS.Constants;
+using Izenda.BI.DataAdaptor.RDBMS.Redshift.CommandGenerators.CalculatedGenerators;
+using Izenda.BI.DataAdaptor.RDBMS.Redshift.Constants;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.Redshift.CommandGenerators
 {
@@ -18,14 +20,6 @@ namespace Izenda.BI.DataAdaptor.RDBMS.Redshift.CommandGenerators
                 }
 
                 return selectFieldCommandFormat;
-            }
-        }
-
-        public override DateAddTokenCommandGenerator DateAddTokenCommandGenerator
-        {
-            get
-            {
-                return new RedshiftDateAddTokenCommandGenerator(null);
             }
         }
 

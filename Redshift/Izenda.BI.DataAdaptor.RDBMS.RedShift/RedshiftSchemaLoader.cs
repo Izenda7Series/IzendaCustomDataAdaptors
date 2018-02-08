@@ -59,16 +59,16 @@ namespace Izenda.BI.DataAdaptor.RDBMS.Redshift
                     conn.Query<dynamic>(sql, new { SPECIFIC_SCHEMA = specificSchema, SPECIFIC_NAME = specificName })
                         .Select(s => new QuerySourceParameter
                         {
-                            Name = s.PARAMETER_NAME,
-                            QuerySourceName = s.SPECIFIC_NAME,
-                            Category = s.SPECIFIC_SCHEMA,
-                            DataType = s.DATA_TYPE,
-                            IzendaDataType = dataTypeAdaptor.GetIzendaDataType(s.DATA_TYPE),
-                            InputMode = s.PARAMETER_MODE.Equals("IN", StringComparison.OrdinalIgnoreCase),
-                            Result = s.IS_RESULT.Equals("YES", StringComparison.OrdinalIgnoreCase),
-                            Position = s.ORDINAL_POSITION,
+                            Name = s.parameter_name,
+                            QuerySourceName = s.specific_name,
+                            Category = s.specific_schema,
+                            DataType = s.data_type,
+                            IzendaDataType = dataTypeAdaptor.GetIzendaDataType(s.data_type),
+                            InputMode = s.parameter_mode.Equals("IN", StringComparison.OrdinalIgnoreCase),
+                            Result = s.is_result.Equals("YES", StringComparison.OrdinalIgnoreCase),
+                            Position = s.ordinal_position,
                             Value = DBNull.Value,
-                            AllowDistinct = dataTypeAdaptor.GetAllowDistinct(s.DATA_TYPE)
+                            AllowDistinct = dataTypeAdaptor.GetAllowDistinct(s.data_type)
                         }).ToList();
 
                 return parametes;

@@ -86,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeMappingTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeIsNullTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeLenTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCSnowflakeGetDateTokenCommandGenerator.cs" />

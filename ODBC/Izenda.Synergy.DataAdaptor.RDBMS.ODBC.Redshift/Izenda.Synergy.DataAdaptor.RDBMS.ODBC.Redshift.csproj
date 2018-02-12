@@ -94,6 +94,7 @@
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftDatePartTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftExpressionCommandGenerator.cs" />
     <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftExpressionCommandGeneratorVisitor.cs" />
+    <Compile Include="CommandGenerators\CalculatedGenerators\ODBCRedshiftMappingTokenCommandGenerator.cs" />
     <Compile Include="CommandGenerators\ConvertNullToEmptyGenerator\ODBCRedshiftNullToEmptyConvertor.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarMonth.cs" />
     <Compile Include="CommandGenerators\FilterGenerators\DateTimeGenerators\ODBCCalendarQuarter.cs" />

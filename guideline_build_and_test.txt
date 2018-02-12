@@ -1,5 +1,15 @@
 # Step to build and test
-	- Build solution
-	- Copy Izenda.BI.DataAdaptor.RDBMS.ODBC.dll and Izenda.BI.QueryNormalizer.ODBC.dll to Izenda API\bin folder
+	- Download Izenda API package from http://downloads.izenda.com/
+	- Extract API package then copy below libraries to ~\IzendaCustomDataAdaptors\ODBC\libs
+		+ Izenda.BI.DataAdaptor.RDBMS.dll
+		+ Izenda.BI.DataSourceAdapter.dll
+		+ Izenda.BI.Framework.dll
+		+ Izenda.BI.Logging.dll
+		+ Izenda.BI.QueryNormalizer.Utility.dll
+		+ Izenda.BI.RDBMS.dll
+		+ Izenda.BI.Resource.dlls
+		+ Izenda.BI.Utility.dll
+	- Build solution ODBCDataAdapter.sln
+	- Copy Izenda.BI.DataAdaptor.RDBMS.ODBC.dll and Izenda.BI.QueryNormalizer.ODBC.dll from output folder to Izenda API\bin folder
 	- Restart Izenda API server app
-	- Check that Data Server Type [ODBC] ODBC is existing on Data Server Type dropdown on Data Setup\Connection String\Add Connection page
+	- Check that Data Server Type [ODBC] DBServerName is existing on Data Server Type dropdown on Data Setup\Connection String\Add Connection page

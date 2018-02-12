@@ -1,0 +1,10 @@
+Extract Izenda API package then copy below libraries for Izenda folder.
+
+Izenda.BI.DataAdaptor.RDBMS.dll
+Izenda.BI.DataSourceAdapter.dll
+Izenda.BI.Framework.dll
+Izenda.BI.Logging.dll
+Izenda.BI.QueryNormalizer.Utility.dll
+Izenda.BI.RDBMS.dll
+Izenda.BI.Resource.dlls
+Izenda.BI.Utility.dll

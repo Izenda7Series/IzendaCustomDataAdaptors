@@ -35,6 +35,9 @@ using Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.Constants;
 using Izenda.BI.Framework.Models;
 using System.Collections.Generic;
 using Izenda.BI.Logging;
+using System.Data.Odbc;
+using Dapper;
+using System.Linq;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake
 {
@@ -45,7 +48,7 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake
 
         public override List<Relationship> LoadRelationships(string connectionString, List<string> schemas = null)
         {
-            throw new System.NotImplementedException("Have to implement loading relationship for Snowflake database");//UNDONE: have to implement this method
+            //throw new System.NotImplementedException("Have to implement loading relationship for Snowflake database");//UNDONE: have to implement this method
             //using (var connection = new OdbcConnection(connectionString))
             //{
             //    connection.Open();
@@ -73,6 +76,8 @@ namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake
 
             //    return relationships;
             //}
+
+            return new List<Relationship>();
         }
 
         protected override List<QuerySourceField> LoadFieldsFromProcedure(string connectionString, string type, string categoryName, string querySourceName, List<QuerySourceParameter> parameters = null, bool ignoreError = true, ILog log = null)

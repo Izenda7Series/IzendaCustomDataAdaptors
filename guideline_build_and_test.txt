@@ -7,7 +7,7 @@
 		+ Izenda.BI.Logging.dll
 		+ Izenda.BI.QueryNormalizer.Utility.dll
 		+ Izenda.BI.RDBMS.dll
-		+ Izenda.BI.Resource.dlls
+		+ Izenda.BI.Resource.dll
 		+ Izenda.BI.Utility.dll
 	- Build solution ODBCDataAdapter.sln
 	- Copy Izenda.BI.DataAdaptor.RDBMS.ODBC.dll and Izenda.BI.QueryNormalizer.ODBC.dll from output folder to Izenda API\bin folder

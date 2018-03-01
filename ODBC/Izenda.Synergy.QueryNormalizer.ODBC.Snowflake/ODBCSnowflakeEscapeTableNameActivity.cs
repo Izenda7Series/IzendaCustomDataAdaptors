@@ -57,7 +57,7 @@ namespace Izenda.BI.QueryNormalizer.ODBC.Snowflake
         public override void Execute(QueryNormalizerContext context)
         {
             var sql = context.Query;
-            sql = sql.Replace("[[", "\"").Replace("]]", "\"");
+            sql = sql.Replace("[[", @"""").Replace("]]", @"""");
 
             context.Query = sql;
         }

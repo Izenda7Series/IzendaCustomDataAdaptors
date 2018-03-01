@@ -41,6 +41,8 @@ using Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake.CommandGenerators;
 using Izenda.BI.DataAdaptor.SQL.SchemaLoader;
 using Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake;
 using Izenda.Synergy.DataAdaptor.RDBMS.ODBC;
+using System;
+using Izenda.BI.Framework.Constants;
 
 namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBCSnowflake
 {
@@ -80,6 +82,34 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBCSnowflake
                 }
 
                 return redshiftQueryNormalizer;
+            }
+        }
+
+        /// <summary>
+        /// The supported operation
+        /// </summary>
+        protected override Dictionary<string, Version> SupportedOperations
+        {
+            get
+            {
+                var databaseOperations = base.SupportedOperations;
+                databaseOperations.Remove(DatabaseOperations.SubTotal);
+
+                return databaseOperations;
+            }
+        }
+
+        /// <summary>
+        /// The partial supported operation
+        /// </summary>
+        protected override Dictionary<string, Version> PartialSupportedOperations
+        {
+            get
+            {
+                var partialSupportedOperations = base.PartialSupportedOperations;
+                partialSupportedOperations.Remove(DatabaseOperations.SubTotal);
+
+                return partialSupportedOperations;
             }
         }
 

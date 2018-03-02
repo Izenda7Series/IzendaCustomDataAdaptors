@@ -93,7 +93,7 @@ namespace Izenda.Synergy.DataAdaptor.RDBMS.ODBC
             {
                 try
                 {
-                    Log($"ODBC Execute Query: {query}", LogType.Info);
+                    Log($"ODBC Execute Query: {Environment.NewLine}{query}", LogType.Info);
                     return connection.Query<T>(query, param, commandTimeout: queryTimeout);
                 }
                 catch (OdbcException ex)

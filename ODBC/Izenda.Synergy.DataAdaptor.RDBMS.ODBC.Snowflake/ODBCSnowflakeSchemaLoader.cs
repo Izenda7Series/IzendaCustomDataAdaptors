@@ -38,46 +38,71 @@ using Izenda.BI.Logging;
 using System.Data.Odbc;
 using Dapper;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Izenda.BI.DataAdaptor.RDBMS.ODBCSnowflake
 {
     [DBServerTypeSupporting("88F5A470-9269-499B-A69C-70C94803AC3E", "ODBC Snowflake", "[ODBC] Snowflake")]
     public class ODBCSnowflakeSchemaLoader : ODBCSchemaLoader
     {
+        public const string FOREIGN_KEY_CONSTRAINT_REGEX_PATTERN = @"constraint(.*)foreign key(.*)references(.*)";
+
         public override DatabaseSupportDataType DatabaseSupportDataType => new SnowflakeSupportDataType();
 
         public override List<Relationship> LoadRelationships(string connectionString, List<string> schemas = null)
         {
-            //throw new System.NotImplementedException("Have to implement loading relationship for Snowflake database");//UNDONE: have to implement this method
-            //using (var connection = new OdbcConnection(connectionString))
-            //{
-            //    connection.Open();
+            using (var connection = new OdbcConnection(connectionString))
+            {
+                connection.Open();
 
-            //    var query = @"select kcu.constraint_name as fk_name,
-            //                            kcu.constraint_schema as jionschema,
-            //                            kcu.table_name as jiontable,
-            //                            kcu.column_name as jioncolumn,
-            //                            ccu.constraint_schema as foreignschema,
-            //                            ccu.table_name as foreigntable,
-            //                            ccu.column_name as foreigncolumn
-            //                    from information_schema.key_column_usage as kcu
-            //                    inner join information_schema.constraint_column_usage as ccu on ccu.constraint_name = kcu.constraint_name
-            //                    inner join pg_constraint as pgc on pgc.conname = kcu.constraint_name
-            //                    where pgc.contype = 'f'";
+                const string getTableQuery = @"SELECT DISTINCT TC.TABLE_CATALOG, TC.TABLE_SCHEMA, TC.TABLE_NAME FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS AS RC
+                                INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS AS TC ON RC.CONSTRAINT_NAME = TC.CONSTRAINT_NAME";
 
-            //    var relationships = connection.Query<dynamic>(query)
-            //        .Select(r => new Relationship
-            //        {
-            //            JoinQuerySourceName = r.jionschema + '.' + r.jiontable,
-            //            ForeignQuerySourceName = r.foreignschema + '.' + r.foreigntable,
-            //            JoinFieldName = r.jioncolumn,
-            //            ForeignFieldName = r.foreigncolumn
-            //        }).ToList();
+                var relationships = new List<Relationship>();
+                var tables = connection.Query<dynamic>(getTableQuery);
+                foreach (var table in tables)
+                {
+                    // Get table DDL
+                    var tableDDL = connection.Query<string>($"select get_ddl('table', '{table.TABLE_CATALOG}.{table.TABLE_SCHEMA}.{table.TABLE_NAME}');").First();
 
-            //    return relationships;
-            //}
+                    foreach (var line in tableDDL.ToLower().Split(','))
+                    {
+                        if (!Regex.IsMatch(line, FOREIGN_KEY_CONSTRAINT_REGEX_PATTERN, RegexOptions.IgnoreCase))
+                        {
+                            continue;
+                        }
 
-            return new List<Relationship>();
+                        var joinSchema = table.TABLE_SCHEMA;
+                        var joinTable = table.TABLE_NAME;
+                        //Get join column
+                        var fkStartIndex = line.IndexOf("foreign key") + "foreign key".Length;
+                        var fkEndIndex = line.IndexOf("references");
+                        var fkSets = line.Substring(fkStartIndex, fkEndIndex - fkStartIndex).Trim();
+                        var joinColumn = fkSets.Substring(fkSets.IndexOf("(") + 1, fkSets.IndexOf(")") - fkSets.IndexOf("(") - 1);
+
+                        // Get foriegn table and column
+                        var ftStartIndex = line.IndexOf("references") + "references".Length;
+                        var ftEndIndex = line.Length;
+
+                        var refDefine = line.Substring(ftStartIndex, ftEndIndex - ftStartIndex);
+                        var foreignTableFull = refDefine.Substring(0, refDefine.IndexOf("("));
+                        var foreignSchema = foreignTableFull.Split('.')[1];
+                        var foreignTable = foreignTableFull.Split('.')[2];
+
+                        var foreignColumn = refDefine.Substring(refDefine.IndexOf("(") + 1, refDefine.IndexOf(")") - refDefine.IndexOf("(") - 1);
+
+                        relationships.Add(new Relationship
+                        {
+                            JoinQuerySourceName = $"{joinSchema}.{joinTable}",
+                            ForeignQuerySourceName = $"{foreignSchema}.{foreignTable}",
+                            JoinFieldName = joinColumn,
+                            ForeignFieldName = foreignColumn,
+                        });
+                    }
+                }
+
+                return relationships;
+            }
         }
 
         protected override List<QuerySourceField> LoadFieldsFromProcedure(string connectionString, string type, string categoryName, string querySourceName, List<QuerySourceParameter> parameters = null, bool ignoreError = true, ILog log = null)
